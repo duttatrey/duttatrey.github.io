@@ -4,7 +4,7 @@
 
 layout: home
 ---
-![Duttatrey](assets/images/bio-image.png =250x)
+<img src="assets/images/bio-image.png" width="200">
 Hi! I am Duttatrey.
 
 I am a mathematics PhD student at the [University of Canterbury]("http://www.canterbury.ac.nz"), where I am funded by a PhD scholarship from the Marsden Grant.
