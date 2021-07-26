@@ -9,7 +9,7 @@ I've volunteered at several [MathsCraft New Zealand](www.mathscraftnz.org) event
 
 ![MathsCraft NZ](/assets/images/mathscraft.jpg)
 
-Recently, I volunteered at Christchurch MathsCraft Day this May 2021.
+Recently, I volunteered at Christchurch MathsCraft Day in May 2021.
 
 ---
 
@@ -26,7 +26,7 @@ I've delivered a few talks, both whiteboard based and with slides.
 
 I have conducted expository talks and problem solving sessions for the New Zealand Mathematics Olympiad Committee Workshops held in Christchurch. I don't own these problems, but I did put some twists and turns on some of them.
 1. Continued Fractions [pdf](/assets/docs/NZMOC/CF.pdf) | [tex](/assets/docs/NZMOC/CF.tex)
-2. Parity and Pigeonhole Principle [pdf short](/assets/docs/NZMOC/Parity_PHP.pdf) | [pdf full](/assets/docs/NZMOC/PHP_Parity_Long.pdf)
+2. Parity and Pigeonhole Principle [pdf short](/assets/docs/NZMOC/Parity_PHP.pdf) | [pdf full](/assets/docs/NZMOC/PHP_Parity_Long.pdf) |
 [tex](/assets/docs/NZMOC/PHP_Parity_Long.tex)
 
 
