@@ -26,3 +26,5 @@ I’m putting together this page to compile advice I’ve found useful over the 
 - [https://cpb-us-w2.wpmucdn.com/web.sas.upenn.edu/dist/0/713/files/2020/07/WritingMath_transcript.pdf](https://cpb-us-w2.wpmucdn.com/web.sas.upenn.edu/dist/0/713/files/2020/07/WritingMath_transcript.pdf)
 - [https://quomodocumque.files.wordpress.com/2010/09/talktipsheet.pdf](https://quomodocumque.files.wordpress.com/2010/09/talktipsheet.pdf)
 
+### Advice Compilations:
+- Terence Tao's Career Advice page: [https://terrytao.wordpress.com/career-advice/](https://terrytao.wordpress.com/career-advice/)
