@@ -28,3 +28,7 @@ I’m putting together this page to compile advice I’ve found useful over the 
 
 ### Advice Compilations:
 - Terence Tao's Career Advice page: [https://terrytao.wordpress.com/career-advice/](https://terrytao.wordpress.com/career-advice/)
+
+
+### Notes for Math Courses:
+- AMS Open Math Notes: [https://www.ams.org/open-math-notes](https://www.ams.org/open-math-notes)
