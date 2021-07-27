@@ -12,12 +12,11 @@ I’m putting together this page to compile advice I’ve found useful over the 
 - [http://www-math.mit.edu/~poonen/papers/speaking.pdf](http://www-math.mit.edu/~poonen/papers/speaking.pdf)
 
 ### Listening to Talks:
-- Three Things: Ravi Vakil's trick to listening to talks effectively.
---* [http://math.stanford.edu/~vakil/threethings.html](http://math.stanford.edu/~vakil/threethings.html)
+- [Three Things]((http://math.stanford.edu/~vakil/threethings.html): Ravi Vakil's trick to listening to talks effectively.
 - [https://terrytao.wordpress.com/career-advice/attend-talks-and-conferences-even-those-not-directly-related-to-your-work/](https://terrytao.wordpress.com/career-advice/attend-talks-and-conferences-even-those-not-directly-related-to-your-work/)
 
 ### Writing Mathematics
-- [http://www-math.mit.edu/~poonen/papers/writing.pdf](http://www-math.mit.edu/~poonen/papers/writing.pdf)
+- Some practical mathematics writing tips : [http://www-math.mit.edu/~poonen/papers/writing.pdf](http://www-math.mit.edu/~poonen/papers/writing.pdf)
 - [https://cpb-us-w2.wpmucdn.com/web.sas.upenn.edu/dist/0/713/files/2020/07/WritingMath_transcript.pdf](https://cpb-us-w2.wpmucdn.com/web.sas.upenn.edu/dist/0/713/files/2020/07/WritingMath_transcript.pdf)
 - [https://quomodocumque.files.wordpress.com/2010/09/talktipsheet.pdf](https://quomodocumque.files.wordpress.com/2010/09/talktipsheet.pdf)
 
