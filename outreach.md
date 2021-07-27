@@ -18,6 +18,7 @@ Recently, I volunteered at Christchurch MathsCraft Day in May 2021.
 
 I started the [UC Students' Mathematics Colloquium](https://groups.google.com/g/uc-students-math-colloquium)  in October 2020, fresh after a wave of COVID-19 and subsequent continual lockdowns. We organised the talks for an audience of students and young researchers: students from Postgraduate and Honors courses presented their mathematical interests in 30-45 minute talks, with room for questions.
 I've delivered a few talks, both whiteboard based and with slides.
+
 | 1.| Mazes to Amaze | [pdf](/assets/docs/UCSMC2021/Mazes to Amaze.pdf) |
 
 ---
