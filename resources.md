@@ -20,3 +20,6 @@ I can be contacted at [duttatrey.nath@gmail.com](mailto: duttatrey.nath@gmail.co
 
 
 #### Other Tools:
+
+- ipe
+- DeTeXify
