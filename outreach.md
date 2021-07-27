@@ -18,7 +18,7 @@ Recently, I volunteered at Christchurch MathsCraft Day in May 2021.
 
 I started the [UC Students' Mathematics Colloquium](https://groups.google.com/g/uc-students-math-colloquium)  in October 2020, fresh after a wave of COVID-19 and subsequent continual lockdowns. We organised the talks for an audience of students and young researchers: students from Postgraduate and Honors courses presented their mathematical interests in 30-45 minute talks, with room for questions.
 I've delivered a few talks, both whiteboard based and with slides.
-1. [Mazes to Amaze](/assets/docs/UCSMC2021/Mazes to Amaze.pdf)
+| 1.| Mazes to Amaze | [pdf](/assets/docs/UCSMC2021/Mazes to Amaze.pdf) |
 
 ---
 
@@ -26,8 +26,8 @@ I've delivered a few talks, both whiteboard based and with slides.
 
 I have conducted expository talks and problem solving sessions for the New Zealand Mathematics Olympiad Committee Workshops held in Christchurch. I don't own these problems, but I did put some twists and turns on some of them.
 
-1. Continued Fractions | [pdf](/assets/docs/NZMOC/CF.pdf) | [tex](/assets/docs/NZMOC/CF.tex) | |
-2. Parity and Pigeonhole Principle | [pdf short](/assets/docs/NZMOC/Parity_PHP.pdf) | [pdf full](/assets/docs/NZMOC/PHP_Parity_Long.pdf) | [tex](/assets/docs/NZMOC/PHP_Parity_Long.tex) |
+| 1. | Continued Fractions | [pdf](/assets/docs/NZMOC/CF.pdf) | [tex](/assets/docs/NZMOC/CF.tex) | |
+| 2. | Parity and Pigeonhole Principle | [pdf short](/assets/docs/NZMOC/Parity_PHP.pdf) | [pdf full](/assets/docs/NZMOC/PHP_Parity_Long.pdf) | [tex](/assets/docs/NZMOC/PHP_Parity_Long.tex) |
 
 
 ---
