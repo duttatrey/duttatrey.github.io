@@ -1,3 +1,9 @@
+---
+layout: page
+title: Advice
+permalink: /Advice/
+---
+
 Work in Progress.
 
 >A mathematician was explaining his work to Tate, who looked bored. Eventually the mathematician asked "You don't find this interesting?"
