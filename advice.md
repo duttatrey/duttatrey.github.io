@@ -12,7 +12,7 @@ I’m putting together this page to compile advice I’ve found useful over the 
 - [http://www-math.mit.edu/~poonen/papers/speaking.pdf](http://www-math.mit.edu/~poonen/papers/speaking.pdf)
 
 ### Listening to Talks:
-- [Three Things]((http://math.stanford.edu/~vakil/threethings.html): Ravi Vakil's trick to listening to talks effectively.
+- [Three Things](http://math.stanford.edu/~vakil/threethings.html): Ravi Vakil's trick to listening to talks effectively.
 - [https://terrytao.wordpress.com/career-advice/attend-talks-and-conferences-even-those-not-directly-related-to-your-work/](https://terrytao.wordpress.com/career-advice/attend-talks-and-conferences-even-those-not-directly-related-to-your-work/)
 
 ### Writing Mathematics
