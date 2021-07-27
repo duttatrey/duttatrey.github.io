@@ -1,0 +1,312 @@
+\documentclass[12pt]{amsart}
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows,decorations.pathmorphing}
+\usepackage{graphicx}
+\usepackage{tikz-cd}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[inline]{enumitem}
+\usepackage[top=2in, bottom=1.5in, left=1in, right=1in]{geometry}
+
+%-----------------------------------------------------------------------------------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}\newtheorem{question}[theorem]{Question}
+\theoremstyle{definition}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{nota}[theorem]{Notation}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{xca}[theorem]{Exercise}
+\newtheorem{fact}[theorem]{Fact}
+\theoremstyle{remark}
+\newtheorem{rmk}[theorem]{Remark}
+\newtheorem{pb}[theorem]{Problem}
+\numberwithin{equation}{section}
+\parindent 0pt
+\parskip 3pt
+\pagestyle{plain}
+\begin{document}
+
+\title{ Continued Fractions}
+\author{Collected by: Duttatrey N. Srivastava}
+%    Remove any unused author tags.
+
+
+\date{18 November 2019}
+
+%\begin{abstract}
+%\end{abstract}
+
+\maketitle
+Continued fractions have been studied for over 2000 years. The Indian mathematician Aryabhata recorded his use of continued fractions in 550 A.D. when solving linear equations with infinitely many solutions. However, his use of these interesting mathematical expressions was limited to the specific problems. Furthermore, ancient Greek and Arab mathematical documents have mentioned continued fractions.  In the sixteenth and seventeenth centuries, examples of continued fractions that resemble the ones we know of today came up: Rafael Bombelli discovered that the square root of 13 could be expressed as a continued fraction. Pietro Cataldi did the same years later with the square root of 18. Eventually, throughout the seventeenth and eighteenth centuries, John Wallis in his work \textit{Arithemetica Infinitorium}, Christiaan Huygens in his astronomical research, and Leonhard Euler in his work \textit{De Fractionlous Continious} established the theorems we know about continued fractions today. 
+
+
+
+\section{Proper and Improper Fractions}
+Write the following fractions in the simplest form
+\begin{xca}
+
+\begin{enumerate*}
+\item $\frac{20}{14}$
+\item $\frac{10}{6}$
+\item $\frac{6}{15}$
+\item $\frac{32}{6}$
+\item $\frac{289}{51}$
+\item $\frac{355}{113}$
+\end{enumerate*}
+\end{xca}
+ Identify which of these are improper fractions, and write them as sums of a whole number and a proper fraction.
+
+\section{Euclidean division algorithm}
+
+Given two integers $a$ and $b$, the fraction $\frac{a}{b}$ makes sense when $b\neq 0$. 
+\begin{theorem}[Euclidean algorithm]
+Given two positive integers $a$ and $b$, if $b\neq 0$, one can write  \[ a=bq+r,\] where $0\leq r\textless b$.
+\end{theorem}
+\begin{xca}
+\begin{enumerate} Practice at using the algorithm for the following set of numbers, and find $q$ and $r$ as above:
+\item $a= 37$, $b= 8 $,
+\item $a= 220$, $b=52 $
+\item $a=33 $, $b= 10 $
+\item $a= 40$, $b= 4$
+\item $a= 127$, $b=23 $
+\item $a=9 $, $b= 11 $.
+\end{enumerate}
+Do any of these pairs have any common factors? If yes, is $r$ a multiple of these common factors?
+\end{xca}
+
+
+\begin{theorem}
+Given two positive integers $a$ and $b$, let $ a=bq+r$, with $0\leq r\textless b$. Then \[\gcd(a,b)=\gcd(b,r)\].
+\end{theorem}
+
+\begin{xca}
+\begin{enumerate} Find the gcd of these two 
+\item $a= 10$, $b=124 $,
+\item $a= 220$, $b=35 $
+\item $a=35 $, $b= 140 $
+\item $a= 42$, $b= 24$
+\item $a= 127$, $b=24 $
+\item $a=9 $, $b= 11 $.
+\end{enumerate}
+\end{xca}
+
+Note that the algorithm stops in finitely many steps.(Why?)
+
+\section{Expressing rationals as continued fractions}
+Consider the following problem:
+\begin{pb}
+Let \[\frac{30}{7}=x+ \cfrac{1}{y+\cfrac{1}{z}}\]
+What is the sum $x+y+z$?
+\end{pb}
+The problem looks a bit odd, but we have introduced all the tools required to solve this. Before we proceed to solve this one, we introduce some notation and terminology to talk about it better:
+\begin{defn}
+A general continued fraction is an expression of the form \[a_0+ \cfrac{b_1}{a_1+\cfrac{b_2}{a_2+\ddots}}\] where $a_1,a_2,\ldots$ and $b_1,b_2,\ldots$ are non-negative integers. We call a general continued fraction a \textbf{Continued Fraction} if all $b_i=1$ for $i=1,2,3,\ldots$. 
+
+\end{defn}
+
+
+
+For ease of notation(and in vehement opposition to clumsiness!):
+\begin{nota} We define the expression $[a_0, a_1,a_2,a_3,\ldots]$ as  \[ [a_0, a_1,a_2,a_3,\ldots]:= a_0+ \cfrac{1}{a_1+\cfrac{1}{a_2+\cfrac{1}{a_3+\ddots}}}\]
+\end{nota}
+\begin{defn}
+A \textbf{Finite Continued Fraction} is a continued fraction such that all $a_i=0$ for every $i\geq n$. 
+
+\end{defn}
+
+\subsection{Representation as Simple Continued Fractions}
+\subsubsection{Natural Numbers:} $n$ can be written as $[n]$.
+\subsubsection{Fractions:}
+Consider two non zero integers $a$ and $b$. The fraction $\frac{a}{b}$ can then be converted to a continued fraction via the Euclidean algorithm: 
+
+The following steps could be used to generate the continued fraction of an improper fraction $\frac{a}{b}$:
+
+\begin{enumerate}
+\item By Euclidean algorithm, $a=bq+r$. Dividing all sides by $b$ gives
+\[\frac{a}{b}=a_0+\frac{r}{b}\]
+\item Since $r\textless b$, we know $r/b\textless 1$. Consider one step further \[ \frac{r}{b}=\frac{1}{\frac{b}{r}}\] and so \[ \frac{a}{b}=a_0+ \frac{1}{b/r}\] 
+\item  Now $b/r$ is again an improper fraction, and applying Step 1 again to $b$ and $r$ we have
+\[b=a_1r+d\] and thus  \[\frac{b}{r}=a_1+\frac{d}{r}\]
+
+
+
+\item If $\frac{d}{r}$ is improper fraction, repeat through Step 1. If $\frac{d}{r}$ is proper, repeat Step 2.
+\end{enumerate}
+
+It looks like this can be done \textit{ad infinitum}.
+
+Note that the algorithm above already gives us the method of finding continued fractions for proper fractions: (Following Step 2 onwards). Can any rational number can be written as a finite continued fraction?
+
+\begin{xca}
+Rewrite as simple continued fractions:
+\begin{enumerate}
+\item 8/5
+\item 13/8?
+\item 314/271, and 271/314
+\item \textit{Problem $3.1$}.
+\end{enumerate}•
+Are these continued fractions unique for these fractions?
+\end{xca}
+
+\subsubsection{Decimals} 
+
+If we look at irrational numbers (numbers which cannot be written exactly as a fraction) we will find no pattern in their decimal fractions. For instance, here is $\sqrt{2}$ to $50$ decimal places 
+$$1.41421 35623 73095 04880 16887 24209 69807 85696 71875 37694\ldots$$
+Indeed, it is not too difficult to show that, if any decimal fraction ever repeats, then it must be a proper fraction, that is a rational number - see the references section at the foot of this page.
+The converse is also true, i.e. that every rational number has a decimal fraction that either stops or eventually repeats the same cycle of digits over and over again for ever.
+
+\begin{fact}
+A number with finite decimal representation, or repeating decimal representation is rational, and hence can be converted to a fraction(further, continued fraction).
+\end{fact}
+
+How about numbers with non-repeating decimal representations( $\sqrt{2}, \pi, e$ etc)? Can we use the method above to say something? Knowing decimal expansions of irrational numbers might help find a continued fraction. We talk about a few examples later.
+
+\subsection{From Continued fractions to Ordinary fractions}
+Given a finite continued fraction, we can find the ordinary fraction simply by evaluating each fraction and taking reiprocals:
+\[1+ \cfrac{1}{2+\cfrac{1}{3}}=1+ \cfrac{1}{(\frac{7}{3})}=1+\frac{3}{7}=10/7.\]
+
+A short-cut is to notice that
+$$[ ... , a, b ] = [ ... , a + 1/b ]$$
+
+\begin{xca}
+Find the value of the following continued fractions:
+\begin{enumerate}
+\item $[2,3,4]$,
+\item $[0,2,3,4]$,
+\item $[1,2,3,4,5]$ and $[1,2,3,4,4,1]$
+\item $[3,1,4,1,5,9]$,
+\item $[ 3,1,4,1,5,8,1]$,
+\item $[1,1,1,1,1]$ and $[1,1,1,2]$.
+\end{enumerate}•
+Find the continued fraction for the following fractions:
+\begin{enumerate}
+\item $10/7$ and $30/21$
+\item $22/9$ and $66/27$
+\end{enumerate}•
+
+
+\end{xca}
+%$a_0+ \cfrac{1}{a_1+\cfrac{d}{r+\ddots}}$
+
+
+\section{Some properties of Continued fractions}
+Let $[a_0,a_1,\ldots, a_n]$ be a continued fraction. Then 
+\begin{enumerate}
+\item (Moving to left) \[ [a_0,a_1,\ldots, a_{n-1},a_n] = [ a_0,a_1,\ldots, a_{n+1} + \frac{1}{a_n} ].\] In particular, \[[a_0,a_1,\ldots, a_{n-1},1] = [a_0,a_1,\ldots, a_{n-1} + 1].\]
+\item (Reciprocals) If $x=[a_0,a_1,\ldots, a_{n-1},a_n]$, then \[\frac{1}{x}=[0,a_0,a_1,\ldots, a_{n-1},a_n].\]
+\item There is no need to reduce the proper fractions to their lowest forms to find the correct continued fraction(s).
+\end{enumerate}•
+
+
+\section{some known constants and their continued fractions(e, pi, golden ratio etc)}
+\begin{defn}
+For infinite continued fractions $[a_0,a_1,\ldots, a_n,\ldots]$, we define the $n^{th}-convergent$ as \[\frac{p_n}{q_n}:=[a_0,a_1,\ldots, a_n].\]
+\end{defn}
+These convergents give us a way of approximating these constants to a certain extent. In fact, given an irrational number $\alpha$, we have the following classical result:
+\begin{theorem} [Dirichlet Approximation Theorem]
+For any positive real number $\alpha$, and any positive integer $n$, there are positive integers $p$ and $q$ with $q \textless n$ for which
+\[\left| \alpha-\frac{p}{q}\right|\leq \frac{1}{q^2}\]
+\end{theorem}
+This bound $\frac{1}{q^2}$ could be made even smaller. 
+\begin{xca}
+Find the first 4 convergents of the following constants: 
+$e:=2.718281828..$\\
+$\pi:=3.14159265358979..$\\
+$\varphi:=1.618..$
+\end{xca}
+
+
+
+\section{Square roots and continued fractions}
+
+Another way to introduce or "discover" continued fractions is based on finding the square-root of a number. This turns out to have some very useful properties.
+Take, for example, $\sqrt{2}$. The nearest square below $2$ is $1$, so we know $1\le \sqrt{2}\le 2$. Let's write:
+\[\sqrt{2} = 1 + x,\] where we are sure that $x\neq 0$. Then
+\[2 = (1 + x)^2\]
+ \[2  = 1 + 2x + x^2\]
+ \[  =1 + x( 2 + x)\]
+If we rearrange the last line we have
+\[1 = x(2 + x)\]
+\[ x = \frac{1}{2 + x} \]
+Now we have a formula for x, we can use it on the right-hand side and get:
+$$ x = \cfrac{1}{2 + \cfrac{1}{2 + x}}=\cfrac{1}{2 + \cfrac{1}{2 + \cfrac{1}{2 + x}}}=\cfrac{1}{{2 + \cfrac{1}{2 + \cfrac{1}{4 \ddots}}}}=[0,2,2,2,2,2,\ldots] $$ 
+
+When we repeat this, we get a continued fraction which never ends!
+So $\sqrt{2}=1+[0,2,2,\ldots]= [1,2,2\ldots]$.
+\begin{rmk}
+ Is there any advantage in this infinitely long fractional representation? Yes! We can stop the continued fraction at any point and then reduce the shortened form to an ordinary fraction.\\ Each time the fraction is a better approximation to the actual square-root than if we stopped it at any earlier point.
+\end{rmk}
+Note that one crucial step with this process was that $2=1^2+1$. This process can be generalised to find a continued fraction for square roots of non-square numbers:
+
+\textbf{Algorithm:} The steps in the algorithm for finding a simple CF for $\sqrt{n}$ are:
+\begin{enumerate}
+\item Find the nearest square number less than $n$. Let's call it $m^2$, so that $m^2\textless n$ and $n\textless (m+1)^2$. Now, $\sqrt{n} = m + 1/x$ where $n$ and $m$ are whole numbers.
+\item Rearrange the equation of Step 1 into a form involving the square root which will appear as the denominator of a fraction: $x = 1 / (\sqrt{n} - m)$.
+\item We now have a fraction with a square-root in the denominator. Eliminate the square-root from the denominator(In this case, multiply top and bottom by $(\sqrt{n} + m)$ and simplify).
+\item either stop if this expression is the square root plus the original first integer or otherwise start again from Step 1 but using the expression at the end of Step 3. 
+\end{enumerate}•	
+
+\begin{xca}
+Find the continued fraction for the square roots of the following 
+\begin{enumerate}
+\item 2,5,10
+\item 3,6,11
+\item 12,14,17.
+\item 16.
+\end{enumerate}•
+\end{xca}
+\subsection{Simple proofs that certain continued fractions are $\sqrt{2}, \sqrt{3}$, etc.}
+ \subsubsection{Proof for $\sqrt{2}$:}
+$x = [1, 2, 2, 2, ...]= 1+[0, 2, 2, 2, ...]$
+\[(x-1) (x+1) = [0, 2, 2, 2, ...] * [2, 2, 2, 2, ...] =  1\] (Product of number and its reciprocal)
+and so
+\[x^2- 1 = 1\]
+$x = \sqrt{2}$
+
+\begin{xca}$\star$
+Similar proofs exist for $\sqrt{3}$, $\sqrt{5}$ and $\sqrt{6}$, Pick one and try to produce a proof as above.\end{xca}
+
+\section{Solving quadratic equations and continued fractions}
+A quadratic equation is of the form $a x^2 + b x + c= 0$ where the $a,b,c$ are numbers. We want to find values for $x$ to make the equation true. There are already methods to find solutions to such equations:the method of completing the squares, and the quadratic formula(which can be considered as method and end result of the same process). Here we try to explain how continued fractions come into the picture. We lead with an example.
+
+Take $x^2 - 5 x - 1 = 0$. We can rewrite the equation in a different way as:
+\[x^2 = 5 x + 1\]
+and now we can divide both sides by $x$ to get:
+\[x = 5 + 1/x\]
+This means that wherever we have $x$, we can replace it by $5 + 1/x$ for example to get:
+$x = 5 + 1/x = 5 + 1/(5 + 1/x)$
+We can clearly replace the x again and again and get an infinite (periodic) continued fraction:
+$x = 5 + 1/x = 5 + 1/(5 + 1/x) = ... = [5, 5, 5, 5, ...]$
+
+\begin{xca}
+For the following quadratic equations, try and find the solution as a continued fraction 
+\begin{enumerate}
+\item $x^2-x-1=0$
+\item $x^2-5x+6=0$
+\item $x^2-3x+1=0$
+\end{enumerate}•
+\end{xca}
+\bigskip
+\subsection{The other solution to the quadratic?} Suppose that $x$ is the continued fraction $[2, \bar{2}] = 2 + \cfrac{1}{(2 + 1/ \ldots)}$. We can write this as $x = 2 + 1/x$ and, by multiplying both sides by $x$ we have the quadratic equation
+$x^2 = 2x + 1$ or $x^2 - 2x - 1 = 0$. which we can solve to find two solutions for $x$ namely:
+$x = 1 + \sqrt{2}$ or $x = 1 - \sqrt{2}$
+The first is $+2·414...$ and the second is $-0·414...$. But what about the other value?
+Certainly, both values satisfy $x = 2+1/x$ and so both are legitimate candidates for the value of $[2, \bar{2}]$
+This means that $[2, \bar{2}]$ is ambiguous - it can mean either of two values.
+
+As always in mathematics, we therefore make an arbitrary choice - a convention - that the continued fraction [a,b,c,d,...] always represents a \textbf{positive} value and we prefix a continued fraction with a minus sign to represent a negative value.
+With this convention we can still represent the other value: $1 - \sqrt{2} = -0·414...$ as follows:
+\[1 - \sqrt{2}=-(\sqrt{2} - 1)\], and $(\sqrt{2} - 1)$ has a continued fraction representation as $[0,\bar{2}]$.
+Thus \[1 - \sqrt{2} = - [0, \bar{2}].\]
+
+\section{End Remarks}
+It is known that we can express any number, rational or irrational, as a finite or infinite continued fraction expression. Solutions to certain type of equations can be expressed with continued fractions with relative ease. In terms of practical applications, continued fractions tend to suffer from poor performance. In other words, in most real-world applications of mathematics, continued fractions are rarely the most practical way to solve a given set of problems as decimal approximations are much more useful (and computers can work with decimals at a much faster rate). However, some interesting observations can still be made using continued fractions. Continued fractions have found their way in Primality testing, solving Pell's equations, approximating real numbers by rationals, and many other applications. Refer to books by Khinchin and the other book by Olds(available online for free) for further details! 
+$$\circ\cup\cap\cup\cap\cup\cap\cup\cap\cup\cap \circ$$
+
+
+
+
+\end{document}
