@@ -8,7 +8,7 @@ Advice
 
 >A mathematician was explaining his work to Tate, who looked bored. Eventually the mathematician asked "You don't find this interesting?" "No, no" said Tate, "I think it is very interesting, but I don't have time to be interested in everything that's interesting.
 
--J.S Milne’s Apocrypha (https://www.jmilne.org/math/apocrypha.html)
+>> J.S Milne’s Apocrypha (https://www.jmilne.org/math/apocrypha.html)
 
 I’m putting together this file to compile advice I’ve found useful over the years, simultaneously or otherwise. My advice would be to read through some of the resources, make a mental note, and come back to it when you actually need direction or words of wisdom. I claim no responsibilities or intellectual right to these, but I do believe I am doing my part in spreading a good message.
 
