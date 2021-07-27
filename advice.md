@@ -8,16 +8,11 @@ Advice
 
 >A mathematician was explaining his work to Tate, who looked bored. Eventually the mathematician asked "You don't find this interesting?" "No, no" said Tate, "I think it is very interesting, but I don't have time to be interested in everything that's interesting.
 
--J.S Milne’s Apocrypha(https://www.jmilne.org/math/apocrypha.html)
+-J.S Milne’s Apocrypha (https://www.jmilne.org/math/apocrypha.html)
 
 I’m putting together this file to compile advice I’ve found useful over the years, simultaneously or otherwise. My advice would be to read through some of the resources, make a mental note, and come back to it when you actually need direction or words of wisdom. I claim no responsibilities or intellectual right to these, but I do believe I am doing my part in spreading a good message.
 
 These advice are nothing if they are not practiced in a respectful, inclusive academic culture. Aim to build a culture around discussing mathematics in informal spaces. Do not treat them as absolutes, though. Your journey, like any protagonist’s journey, is unique, if only upto isomorphism.
-
->The danger to society is not merely that it should believe wrong things, though that is great enough; but that it should become credulous, and lose the habit of testing things and inquiring into them; for then it must sink back into savagery.
--William Kingdon Clifford (of Clifford algebras).
-
-
 
 Speaking at Colloquia and Talking Mathematics:
 
