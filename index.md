@@ -12,3 +12,5 @@ I am a mathematics PhD student at the [University of Canterbury]("http://www.can
 Before coming to Christchurch, I completed my B.Sc. and M.Sc. in Mathematics from [UM-DAE CEBS, Mumbai](www.cbs.ac.in) in 2017.
 
 My (mathematical) interests are in number theory, algebraic and arithmetic geometry. I employ computational tools to support my theoretical exploits.
+
+Our first arXiv Preprint titled ["Brauer Manin Obstructions on hyperelliptic curves"](https://arxiv.org/abs/2112.00230) is now available.
