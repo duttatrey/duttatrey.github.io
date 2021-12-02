@@ -6,6 +6,8 @@ permalink: /Research/
 
 My research deals with Brauer-Manin Obstructions on higher genus hyperelliptic curves. There are interesting phenomenon to notice, and the theory behind it is beautiful.
 
+Our first arXiv preprint is now available: [Link](https://arxiv.org/abs/2112.00230)
+
 Here is a slide I made for my Three Minute Thesis presentation this year. ![3MT](/assets/images/header1.jpg){:class="img-responsive"}
 
 I presented some of the basics of my present research in NZMASP 2020 and 2019. The slides look like this:
