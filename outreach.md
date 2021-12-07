@@ -5,7 +5,7 @@ permalink: /Outreach/
 ---
 
 ### MathsCraft New Zealand
-I've volunteered at several [MathsCraft New Zealand](www.mathscraftnz.org) events, starting with the MathsCraft Day in Martinborough. As stated on the website, Maths Craft brings maths to the masses by celebrating the links between mathematics and craft.
+I've volunteered at several [MathsCraft New Zealand](http://www.mathscraftnz.org) events, starting with the MathsCraft Day in Martinborough. As stated on the website, Maths Craft brings maths to the masses by celebrating the links between mathematics and craft.
 
 ![MathsCraft NZ](/assets/images/mathscraft.jpg)
 
