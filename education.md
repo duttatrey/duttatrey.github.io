@@ -4,7 +4,7 @@ title: Education
 permalink: /Education/
 ---
 
-* _Ph.D., Mathematics_ (Sept 2018-till date)
+* _Ph.D., Mathematics_ (2022)
 
     School of Mathematics and Statistics, University of Canterbury, New Zealand
 
