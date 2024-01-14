@@ -7,7 +7,7 @@ layout: home
 <img align= "right" src="assets/images/bio-image.png" width="400">
 Hi! I am Duttatrey.
 
-I am a mathematics PhD student at the [University of Canterbury]("http://www.canterbury.ac.nz"), where I am funded by a PhD scholarship from the Marsden Grant.
+I have a PhD in mathematics from [University of Canterbury]("http://www.canterbury.ac.nz"). I was funded by a PhD scholarship from the Marsden Grant.
 
 Before coming to Christchurch, I completed my B.Sc. and M.Sc. in Mathematics from [UM-DAE CEBS, Mumbai](www.cbs.ac.in) in 2017.
 
