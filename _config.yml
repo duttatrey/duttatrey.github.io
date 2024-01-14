@@ -24,7 +24,7 @@ github_username:  duttatrey
 linkedin: https://www.linkedin.com/in/duttatrey-nath-srivastava/
 # Build settings
 markdown: kramdown
-theme: minima
+theme: millenial
 plugins:
   - jekyll-feed
 
