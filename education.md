@@ -13,7 +13,7 @@ permalink: /Education/
       Senior Supervisor: Dr. Brendan Creutz
 
       Associate Supervisor: Prof. Felipe Voloch
-- _Integrated M.Sc. in Mathematics_ (2012-2017)
+- _Integrated M.Sc. in Mathematics_ (2017)
 
     UM-DAE Centre for Excellence in Basic Sciences, Mumbai
 
