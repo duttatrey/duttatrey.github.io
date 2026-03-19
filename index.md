@@ -9,6 +9,8 @@ Hi! I am Duttatrey.
 
 I am now a consultant with EY New Zealand in the Financial Services team. My team focuses on actuarial consulting for insurance and banking firms across New Zealand.
 
+The texts are here: [Sacred Texts](/texts)
+
 I have a PhD in mathematics from [University of Canterbury]("http://www.canterbury.ac.nz"). It was funded by a PhD scholarship from the Marsden Grant.
 
 Before coming to Christchurch, I completed my B.Sc. and M.Sc. in Mathematics from [UM-DAE CEBS, Mumbai](www.cbs.ac.in) in 2017.
