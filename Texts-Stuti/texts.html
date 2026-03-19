@@ -113,6 +113,14 @@ layout: null
     .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
     .filter-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
 
+    .filter-divider {
+      width: 1px;
+      height: 1.2rem;
+      background: var(--rule);
+      margin: 0 0.3rem;
+      flex-shrink: 0;
+    }
+
     /* ── Main ── */
     main {
       flex: 1;
@@ -297,10 +305,17 @@ layout: null
 
   <!-- Filter bar -->
   <div class="filter-bar">
-    <span class="filter-label">Filter</span>
+    <span class="filter-label">Deity</span>
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="durga">Durgā / Devī</button>
     <button class="filter-btn" data-filter="hanuman">Hanumān</button>
+
+    <div class="filter-divider"></div>
+
+    <span class="filter-label">Type</span>
+    <button class="filter-btn" data-type-filter="aarti">Ārtī</button>
+    <button class="filter-btn" data-type-filter="chalisa">Chalīsā</button>
+    <button class="filter-btn" data-type-filter="stotra">Stotra</button>
   </div>
 
   <main>
@@ -313,7 +328,7 @@ layout: null
       </div>
       <div class="text-list">
 
-        <a href="aarti-ambe-tu-hai.html" class="text-row" data-gods="durga">
+        <a href="aarti-ambe-tu-hai.html" class="text-row" data-gods="durga" data-type="aarti">
           <div class="row-left">
             <span class="row-devanagari">अम्बे तू है जगदम्बे काली</span>
             <span class="row-title">Ambe Tu Hai Jagadambe Kālī</span>
@@ -329,7 +344,7 @@ layout: null
           </div>
         </a>
 
-        <a href="aarti-jai-ambe-gauri.html" class="text-row" data-gods="durga">
+        <a href="aarti-jai-ambe-gauri.html" class="text-row" data-gods="durga" data-type="aarti">
           <div class="row-left">
             <span class="row-devanagari">जय अम्बे गौरी</span>
             <span class="row-title">Jai Ambe Gaurī</span>
@@ -356,7 +371,7 @@ layout: null
       </div>
       <div class="text-list">
 
-        <a href="durga-chalisa.html" class="text-row" data-gods="durga">
+        <a href="durga-chalisa.html" class="text-row" data-gods="durga" data-type="chalisa">
           <div class="row-left">
             <span class="row-devanagari">दुर्गा चालीसा</span>
             <span class="row-title">Durgā Chalīsā</span>
@@ -372,7 +387,7 @@ layout: null
           </div>
         </a>
 
-        <a href="hanuman-chalisa.html" class="text-row" data-gods="hanuman">
+        <a href="hanuman-chalisa.html" class="text-row" data-gods="hanuman" data-type="chalisa">
           <div class="row-left">
             <span class="row-devanagari">हनुमान चालीसा</span>
             <span class="row-title">Hanumān Chalīsā</span>
@@ -391,14 +406,30 @@ layout: null
       </div>
     </div>
 
-    <!-- ── Other (hidden until populated) ── -->
-    <div class="text-section" data-section="other" style="display:none">
+    <!-- ── Stotra ── -->
+    <div class="text-section" data-section="stotra">
       <div class="section-header">
-        <span class="section-title">Other</span>
-        <span class="section-count" id="count-other"></span>
+        <span class="section-title">Stotra</span>
+        <span class="section-count" id="count-stotra"></span>
       </div>
       <div class="text-list">
-        <!-- add future texts here with class="text-row" and data-gods="..." -->
+
+        <a href="durga-dvatrimsha-namamala.html" class="text-row" data-gods="durga" data-type="stotra">
+          <div class="row-left">
+            <span class="row-devanagari">दुर्गाद्वात्रिंशन्नाममाला</span>
+            <span class="row-title">Durgā Dvātriṃśannāmamālā</span>
+            <span class="row-meta">Mārkaṇḍeya Purāṇa · 32 names</span>
+            <div class="row-tags">
+              <span class="tag">Durgā</span>
+              <span class="tag">Nāmamālā</span>
+              <span class="tag">Sanskrit</span>
+            </div>
+          </div>
+          <div class="row-right">
+            <span class="row-cta">Read →</span>
+          </div>
+        </a>
+
       </div>
     </div>
 
@@ -414,22 +445,29 @@ layout: null
 
   <script>
     var activeFilter = 'all';
+    var activeType   = 'all';
 
-    function applyFilter(filter) {
-      activeFilter = filter;
+    function applyFilter(filter, type) {
+      if (filter !== null) activeFilter = filter;
+      if (type   !== null) activeType   = type;
 
-      document.querySelectorAll('.filter-btn').forEach(function(btn) {
-        btn.classList.toggle('active', btn.dataset.filter === filter);
+      document.querySelectorAll('.filter-btn[data-filter]').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.filter === activeFilter);
+      });
+      document.querySelectorAll('.filter-btn[data-type-filter]').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.typeFilter === activeType);
       });
 
       var rows = document.querySelectorAll('.text-row');
       rows.forEach(function(row) {
-        var gods = row.dataset.gods || '';
-        var show = (filter === 'all') || (gods.indexOf(filter) >= 0);
-        row.style.display = show ? '' : 'none';
+        var gods    = row.dataset.gods || '';
+        var rowType = row.dataset.type || '';
+        var showGod  = (activeFilter === 'all') || (gods.indexOf(activeFilter) >= 0);
+        var showType = (activeType   === 'all') || (rowType === activeType);
+        row.style.display = (showGod && showType) ? '' : 'none';
       });
 
-      var sections = document.querySelectorAll('.text-section');
+      var sections   = document.querySelectorAll('.text-section');
       var anyVisible = false;
 
       sections.forEach(function(sec) {
@@ -454,12 +492,20 @@ layout: null
       document.getElementById('emptyState').classList.toggle('visible', !anyVisible);
     }
 
-    document.querySelectorAll('.filter-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() { applyFilter(btn.dataset.filter); });
+    document.querySelectorAll('.filter-btn[data-filter]').forEach(function(btn) {
+      btn.addEventListener('click', function() { applyFilter(btn.dataset.filter, null); });
     });
 
-    applyFilter('all');
+    document.querySelectorAll('.filter-btn[data-type-filter]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var newType = (activeType === btn.dataset.typeFilter) ? 'all' : btn.dataset.typeFilter;
+        applyFilter(null, newType);
+      });
+    });
+
+    applyFilter('all', 'all');
   </script>
 
 </body>
 </html>
+
