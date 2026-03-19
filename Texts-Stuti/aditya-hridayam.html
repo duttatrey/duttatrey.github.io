@@ -1,0 +1,868 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Āditya Hṛdayam · Reader · Stuti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+Devanagari:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1814;
+      --paper: #f9f7f3;
+      --muted: #8a8480;
+      --rule: #e0ddd8;
+      --accent: #8b6914;
+      --accent-light: #f6f0df;
+      --card-bg: #ffffff;
+      --switch-bg: #eeeae4;
+      --switch-pill: #1a1814;
+      --fs: 1rem;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Progress bar ── */
+    #progressBar {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: var(--accent);
+      z-index: 200;
+      transition: width 0.25s ease;
+      pointer-events: none;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      position: sticky; top: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      z-index: 100;
+    }
+
+    .topbar-row1 {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem; gap: 1rem;
+    }
+
+    .back-link {
+      font-size: 0.78rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      text-decoration: none; display: flex;
+      align-items: center; gap: 0.35rem;
+      flex-shrink: 0; transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--ink); }
+
+    .text-title-bar {
+      font-size: 0.98rem; font-style: italic;
+      color: var(--muted); flex: 1; text-align: center;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .font-controls { display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0; }
+
+    .font-btn {
+      border: 1px solid var(--rule); background: transparent;
+      width: 30px; height: 28px; border-radius: 4px;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 0.82rem; color: var(--muted); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .font-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+    /* ── Script switcher ── */
+    .switcher-row {
+      display: flex; align-items: center;
+      justify-content: center;
+      padding: 0.55rem 1.5rem 0.75rem;
+      gap: 0.8rem; border-top: 1px solid var(--rule);
+    }
+
+    .switcher-label {
+      font-size: 0.68rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted); flex-shrink: 0;
+    }
+
+    .script-switcher {
+      display: flex; background: var(--switch-bg);
+      border-radius: 99px; padding: 3px; gap: 2px;
+    }
+
+    .script-btn {
+      border: none; background: transparent;
+      border-radius: 99px; padding: 0.38rem 1.15rem;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 0.92rem; color: var(--muted);
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+    }
+    .script-btn.active { background: var(--switch-pill); color: #fff; }
+
+    .progress-text {
+      font-size: 0.68rem; letter-spacing: 0.08em;
+      color: var(--muted); margin-left: auto; flex-shrink: 0;
+    }
+
+    /* ── Layout ── */
+    .reader-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      flex: 1; max-width: 1020px;
+      margin: 0 auto; width: 100%;
+      padding: 2rem 1.5rem;
+      gap: 2.5rem; align-items: start;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar { position: sticky; top: 8.5rem; }
+
+    .nav-label {
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.85rem;
+    }
+
+    .section-list { list-style: none; display: flex; flex-direction: column; }
+
+    .section-list li a {
+      display: block; padding: 0.4rem 0.7rem;
+      font-size: 0.9rem; color: var(--muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      border-radius: 0 4px 4px 0;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .section-list li a:hover { color: var(--ink); background: rgba(0,0,0,0.03); }
+    .section-list li a.active { color: var(--ink); border-left-color: var(--accent); }
+
+    /* ── Verse column ── */
+    .verse-column { display: flex; flex-direction: column; }
+
+    .mobile-select { display: none; margin-bottom: 1.4rem; }
+    .mobile-select select {
+      width: 100%; padding: 0.6rem 0.9rem;
+      border: 1px solid var(--rule); border-radius: 6px;
+      background: var(--card-bg);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1rem; color: var(--ink); appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8480' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.9rem center;
+    }
+
+    .section-heading {
+      font-size: 0.67rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 2.2rem 0 0.9rem;
+      border-top: 1px solid var(--rule);
+      margin-top: 1.5rem;
+      scroll-margin-top: 9rem;
+    }
+    .section-heading:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+
+    /* ── Verse card ── */
+    .verse-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      margin-bottom: 0.7rem;
+      padding: 1.35rem 1.5rem;
+      cursor: pointer;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .verse-card:hover { border-color: #cbc8c2; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+    .verse-card.is-active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 4px 20px rgba(139,105,20,0.10);
+    }
+    .verse-card.is-stanza { background: #fdfaf5; }
+    .verse-card.is-stanza.is-active { background: #fff; }
+
+    .card-top {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.95rem; gap: 0.5rem;
+    }
+
+    .verse-num {
+      font-size: 0.68rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .verse-card.is-active .verse-num { color: var(--accent); }
+
+    .verse-type {
+      font-size: 0.62rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      border: 1px solid var(--rule);
+      padding: 0.15rem 0.45rem; border-radius: 99px;
+      margin-right: auto; margin-left: 0.5rem;
+    }
+    .verse-card.is-active .verse-type { border-color: var(--accent-light); color: var(--accent); }
+
+    /* ── Script layers ── */
+    .layer { display: none; }
+    .layer.show { display: block; }
+
+    .layer-dev {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      font-size: calc(var(--fs) * 1.22);
+      font-weight: 400; line-height: 2; color: var(--ink);
+    }
+    .layer-iast {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: calc(var(--fs) * 1.05);
+      font-style: italic; line-height: 1.85; color: var(--ink);
+    }
+    .layer-en {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: var(--fs); line-height: 1.8; color: #595552;
+    }
+    .verse-card.is-active .layer-en { color: var(--ink); }
+    .layer-hi {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      font-size: calc(var(--fs) * 0.96); line-height: 1.9; color: #595552;
+    }
+    .verse-card.is-active .layer-hi { color: var(--ink); }
+
+    /* ── Scholar's note ── */
+    .verse-note {
+      display: none;
+      margin-top: 1rem; padding-top: 0.85rem;
+      border-top: 1px solid var(--rule);
+      font-size: calc(var(--fs) * 0.83);
+      color: var(--muted); font-style: italic; line-height: 1.65;
+    }
+    .verse-card.is-active .verse-note { display: block; }
+
+    /* ── Nav bar ── */
+    .nav-bar {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 1.5rem 0 2rem; gap: 1rem;
+    }
+    .nav-btn {
+      background: none; border: 1px solid var(--rule);
+      padding: 0.5rem 1.3rem;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 0.92rem; color: var(--muted); cursor: pointer;
+      border-radius: 6px; transition: border-color 0.15s, color 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+    .nav-btn:disabled { opacity: 0.28; cursor: default; }
+
+    .verse-counter { font-size: 0.78rem; color: var(--muted); font-style: italic; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 1.4rem 1.5rem; text-align: center;
+      font-size: 0.78rem; color: var(--muted); font-style: italic;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .sidebar      { animation: fadeUp 0.4s 0.05s ease both; }
+    .verse-column { animation: fadeUp 0.4s 0.12s ease both; }
+
+    /* ── Mobile ── */
+    @media (max-width: 680px) {
+      .reader-layout { grid-template-columns: 1fr; padding: 1.1rem 1rem; }
+      .sidebar { display: none; }
+      .mobile-select { display: block; }
+      .topbar-row1 { padding: 0.7rem 1rem; }
+      .text-title-bar { display: none; }
+      .switcher-row { padding: 0.45rem 1rem 0.65rem; }
+      .script-btn { padding: 0.3rem 0.85rem; font-size: 0.86rem; }
+      .verse-card { padding: 1rem 1.1rem; }
+      .progress-text { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progressBar"></div>
+
+<div class="topbar">
+  <div class="topbar-row1">
+    <a href="texts.html" class="back-link">← All Texts</a>
+    <div class="text-title-bar">आदित्यहृदयम् &nbsp;·&nbsp; Āditya Hṛdayam</div>
+    <div class="font-controls">
+      <button class="font-btn" id="btnFontDown">A−</button>
+      <button class="font-btn" id="btnFontUp">A+</button>
+    </div>
+  </div>
+  <div class="switcher-row">
+    <span class="switcher-label">Script</span>
+    <div class="script-switcher" role="group">
+      <button class="script-btn" data-s="dev">देवनागरी</button>
+      <button class="script-btn" data-s="iast">IAST</button>
+      <button class="script-btn" data-s="hi">हिन्दी</button>
+      <button class="script-btn" data-s="en">English</button>
+    </div>
+    <span class="progress-text" id="progressText"></span>
+  </div>
+</div>
+
+<div class="reader-layout">
+  <nav class="sidebar">
+    <p class="nav-label">Sections</p>
+    <ul class="section-list">
+      <li><a href="#s-setting"    data-sec="s-setting">Setting the Scene</a></li>
+      <li><a href="#s-intro"      data-sec="s-intro">Agastya's Teaching</a></li>
+      <li><a href="#s-invoc"      data-sec="s-invoc">Invocation</a></li>
+      <li><a href="#s-litany"     data-sec="s-litany">Litany of Names</a></li>
+      <li><a href="#s-salut"      data-sec="s-salut">Salutations</a></li>
+      <li><a href="#s-cosmic"     data-sec="s-cosmic">Cosmic Function</a></li>
+      <li><a href="#s-phala"      data-sec="s-phala">Fruits &amp; Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <div class="verse-column" id="verseCol">
+    <div class="mobile-select">
+      <select id="mobileSelect">
+        <option value="s-setting">Setting the Scene</option>
+        <option value="s-intro">Agastya's Teaching</option>
+        <option value="s-invoc">Invocation</option>
+        <option value="s-litany">Litany of Names</option>
+        <option value="s-salut">Salutations</option>
+        <option value="s-cosmic">Cosmic Function</option>
+        <option value="s-phala">Fruits &amp; Conclusion</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<footer>आदित्यस्य नमस्कारं ये कुर्वन्ति दिने दिने &nbsp;·&nbsp; Vālmīki Rāmāyaṇa, Yuddha Kāṇḍa · Composed in Anuṣṭup chandas</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────────
+var SECTIONS = [
+  {
+    id: "s-setting", label: "Setting the Scene",
+    verses: [
+      {
+        id: "V1", type: "stanza",
+        dev: "ततो युद्धपरिश्रान्तं समरे चिन्तया स्थितम् ।\nरावणं चाग्रतो दृष्ट्वा युद्धाय समुपस्थितम् ॥ १ ॥",
+        iast: "tato yuddha-pariśrāntaṃ samare cintayā sthitam ।\nrāvaṇaṃ cāgrato dṛṣṭvā yuddhāya samupasthitam ॥ 1 ॥",
+        hi: "उधर श्रीरामचन्द्रजी युद्धसे थककर चिन्ता करते हुए रणभूमिमें खड़े थे, और रावण युद्धके लिये उनके सामने उपस्थित हो गया था।",
+        en: "Then Rāma, exhausted by battle and standing lost in thought on the field, saw Rāvaṇa advancing before him, fully prepared to fight once more.",
+        note: "The hymn opens in medias res — Rāma is not defeated, but he is momentarily overwhelmed. Vālmīki paints a scene of profound dramatic tension: the avatar of Viṣṇu appears human in his fatigue. This vulnerability is intentional; as the Yoga Vāsiṣṭha explains, Rāma's apparent ignorance creates the space for teaching."
+      },
+      {
+        id: "V2", type: "stanza",
+        dev: "दैवतैश्च समागम्य द्रष्टुमभ्यागतो रणम् ।\nउपागम्याब्रवीद्राममगस्त्यो भगवानृषिः ॥ २ ॥",
+        iast: "daivataiś ca samāgamya draṣṭum abhyāgato raṇam ।\nupāgamyābravīd rāmam agastyo bhagavān ṛṣiḥ ॥ 2 ॥",
+        hi: "तब भगवान् अगस्त्य मुनि, जो देवताओंके साथ युद्ध देखनेके लिये आये थे, श्रीरामके पास जाकर बोले।",
+        en: "The venerable sage Agastya, who had come together with the gods to witness the battle, approached Rāma and spoke.",
+        note: "Agastya is one of the seven great ṛṣis (saptarṣis) of Vedic tradition, closely associated with the South — he is said to have crossed the Vindhya mountains and civilised the southern subcontinent. His sudden appearance on the battlefield, in company with the devas who have descended to watch, frames the teaching as a moment of cosmic significance."
+      }
+    ]
+  },
+  {
+    id: "s-intro", label: "Agastya's Teaching",
+    verses: [
+      {
+        id: "V3", type: "stanza",
+        dev: "राम राम महाबाहो श‍ृणु गुह्यं सनातनम् ।\nयेन सर्वानरीन्वत्स समरे विजयिष्यसि ॥ ३ ॥",
+        iast: "rāma rāma mahābāho śṛṇu guhyaṃ sanātanam ।\nyena sarvān arīn vatsa samare vijayiṣyasi ॥ 3 ॥",
+        hi: "सबके हृदयमें रमण करनेवाले महाबाहो राम! यह सनातन गोपनीय स्तोत्र सुनो। वत्स! इसके जपसे तुम युद्धमें अपने समस्त शत्रुओंपर विजय पा जाओगे।",
+        en: "Rāma, Rāma, O mighty-armed one — hear this eternal secret, dear child. By it you shall triumph over all your enemies in battle.",
+        note: "The doubled address 'Rāma Rāma' is characteristic of affectionate intimacy in Sanskrit literature. The word guhyam (secret) aligns this teaching with the upaniṣadic tradition of esoteric transmission. Sanātana (eternal) asserts that what follows is not a tactical trick but a timeless spiritual truth."
+      },
+      {
+        id: "V4", type: "stanza",
+        dev: "आदित्यहृदयं पुण्यं सर्वशत्रुविनाशनम् ।\nजयावहं जपेन्नित्यमक्षयं परमं शिवम् ॥ ४ ॥",
+        iast: "āditya-hṛdayaṃ puṇyaṃ sarva-śatru-vināśanam ।\njayāvahaṃ japen nityam akṣayyaṃ paramaṃ śivam ॥ 4 ॥",
+        hi: "इस गोपनीय स्तोत्रका नाम है 'आदित्यहृदय'। यह परम पवित्र और सम्पूर्ण शत्रुओंका नाश करनेवाला है। इसके जपसे सदा विजयकी प्राप्ति होती है। यह नित्य अक्षय और परम कल्याणमय स्तोत्र है।",
+        en: "The Āditya Hṛdayam — holy, the destroyer of all enemies, the bringer of victory. Chant it daily; it is inexhaustible, supremely auspicious.",
+        note: "Hṛdayam means both 'heart' and 'essence' — so the title can be read as 'the Heart of Āditya' (what pleases the Sun's heart) or 'the Essence of Āditya' (the core teaching about Sūrya). The great commentator Govindarāja favoured the first reading: 'that which brings joy to Āditya's heart'."
+      },
+      {
+        id: "V5", type: "stanza",
+        dev: "सर्वमङ्गलमाङ्गल्यं सर्वपापप्रणाशनम् ।\nचिन्ताशोकप्रशमनं आयुर्वर्धनमुत्तमम् ॥ ५ ॥",
+        iast: "sarva-maṅgala-māṅgalyaṃ sarva-pāpa-praṇāśanam ।\ncintā-śoka-praśamanaṃ āyur-vardhanam uttamam ॥ 5 ॥",
+        hi: "यह सम्पूर्ण मंगलोंका भी मंगल है। इससे सब पापोंका नाश हो जाता है। यह चिन्ता और शोकको मिटाने तथा आयुको बढ़ानेवाला उत्तम साधन है।",
+        en: "It is the most auspicious of all auspicious things, the destroyer of all sins, the stiller of anxiety and grief, and the supreme increaser of life.",
+        note: "This verse and v.4 form the first phalaśruti (statement of benefits) — unusually placed before the hymn proper begins. The Āditya Hṛdayam is distinctive in having its benefits declared twice: here at the outset (as promise) and again in vv. 25–26 (as confirmation after the liturgical core)."
+      }
+    ]
+  },
+  {
+    id: "s-invoc", label: "Invocation",
+    verses: [
+      {
+        id: "V6", type: "stanza",
+        dev: "रश्मिमन्तं समुद्यन्तं देवासुरनमस्कृतम् ।\nपूजयस्व विवस्वन्तं भास्करं भुवनेश्वरम् ॥ ६ ॥",
+        iast: "raśmimantaṃ samudyantaṃ devāsura-namaskṛtam ।\npūjayasva vivasvantaṃ bhāskaraṃ bhuvanīśvaram ॥ 6 ॥",
+        hi: "भगवान् सूर्य अपनी अनन्त किरणोंसे सुशोभित हैं। ये नित्य उदय होनेवाले, देवता और असुरोंसे नमस्कृत, विवस्वान् नामसे प्रसिद्ध, प्रभाका विस्तार करनेवाले और संसारके स्वामी हैं। तुम इनका पूजन करो।",
+        en: "Worship Vivasvān — arrayed with rays, fully risen, reverenced by gods and demons alike, the Illuminator, the Lord of all the worlds.",
+        note: "Vivasvān ('the brilliant one') is one of Sūrya's oldest Vedic names. He is the father of Manu (progenitor of humanity) and of Yama (god of death) — making the sun literally the ancestor of the human race. The detail that both devas and asuras bow to him asserts Sūrya's transcendence over the cosmic conflict at hand."
+      }
+    ]
+  },
+  {
+    id: "s-litany", label: "Litany of Names",
+    verses: [
+      {
+        id: "V7", type: "stanza",
+        dev: "सर्वदेवात्मको ह्येष तेजस्वी रश्मिभावनः ।\nएष देवासुरगणाँल्लोकान् पाति गभस्तिभिः ॥ ७ ॥",
+        iast: "sarva-devātmako hy eṣa tejasvī raśmi-bhāvanaḥ ।\neṣa devāsura-gaṇāṃl lokān pāti gabhastibhiḥ ॥ 7 ॥",
+        hi: "सम्पूर्ण देवता इन्हींके स्वरूप हैं। ये तेजकी राशि तथा अपनी किरणोंसे जगतको सत्ता एवं स्फूर्ति प्रदान करनेवाले हैं। ये ही अपनी रश्मियोंका प्रसार करके देवता और असुरोंसहित सम्पूर्ण लोकोंका पालन करते हैं।",
+        en: "He truly is the self of all the gods — radiant, sustaining all through his rays. He protects all the worlds, and all the hosts of gods and demons, through his light.",
+        note: "This is the theological pivot of the hymn: Sūrya is not merely one god among many but the ātman — the inner Self — of all divine beings. This reflects the Smārta philosophical position (formalised by Ādi Śaṅkara) that all deities are manifestations of one Supreme reality."
+      },
+      {
+        id: "V8", type: "stanza",
+        dev: "एष ब्रह्मा च विष्णुश्च शिवः स्कन्दः प्रजापतिः ।\nमहेन्द्रो धनदः कालो यमः सोमो ह्यपां पतिः ॥ ८ ॥",
+        iast: "eṣa brahmā ca viṣṇuś ca śivaḥ skandaḥ prajāpatiḥ ।\nmahendrо dhаnadaḥ kālo yamaḥ somo hy apāṃ patiḥ ॥ 8 ॥",
+        hi: "ये ही ब्रह्मा, विष्णु, शिव, स्कन्द, प्रजापति, इन्द्र, कुबेर, काल, यम, चन्द्रमा और वरुण हैं।",
+        en: "He is Brahmā, Viṣṇu, and Śiva; Skanda and Prajāpati; Mahendra (Indra) and Kubera; Kāla (Time) and Yama; Soma (the Moon) and Varuṇa.",
+        note: "The list enumerates the entire Vedic and Purāṇic pantheon — creator (Brahmā), preserver (Viṣṇu), destroyer (Śiva), war-god (Skanda), lord of heaven (Indra), god of wealth (Kubera), god of death (Yama), moon-god (Soma), and water-lord (Varuṇa). Sūrya contains them all."
+      },
+      {
+        id: "V9", type: "stanza",
+        dev: "पितरो वसवः साध्या ह्यश्विनौ मरुतो मनुः ।\nवायुर्वह्निः प्रजाप्राण ऋतुकर्ता प्रभाकरः ॥ ९ ॥",
+        iast: "pitaro vasavaḥ sādhyā hy aśvinau maruto manuḥ ।\nvāyur vahniḥ prajā-prāṇa ṛtu-kartā prabhākaraḥ ॥ 9 ॥",
+        hi: "ये ही पितर, वसु, साध्य, अश्विनीकुमार, मरुद्गण, मनु, वायु, अग्नि, प्रजा, प्राण, ऋतुओंको प्रकट करनेवाले तथा प्रभाके पुंज हैं।",
+        en: "He is the Pitṛs (ancestors), the Vasus, the Sādhyas, the twin Aśvins, and the Maruts; he is Manu, Wind, and Fire — the breath of all creatures, the maker of the seasons.",
+        note: "The Pitṛs are the spirits of deceased ancestors whose wellbeing depends on funerary rites. The Vasus are eight elemental deities. The Aśvins are the divine twin physicians. The Maruts are storm gods, companions of Indra. Ṛtu-kartā ('maker of seasons') points to the sun's physical role in governing the agricultural and ritual calendar."
+      },
+      {
+        id: "V10", type: "stanza",
+        dev: "आदित्यः सविता सूर्यः खगः पूषा गभस्तिमान् ।\nसुवर्णसदृशो भानुर्हिरण्यरेता दिवाकरः ॥ १० ॥",
+        iast: "ādityaḥ savitā sūryaḥ khagaḥ pūṣā gabhastimān ।\nsuvarṇa-sadṛśo bhānur hiraṇya-retā divākaraḥ ॥ 10 ॥",
+        hi: "इनके नाम हैं — आदित्य (अदितिपुत्र), सविता (जगतको उत्पन्न करनेवाले), सूर्य (सर्वव्यापक), खग (आकाशमें विचरनेवाले), पूषा (पोषण करनेवाले), गभस्तिमान् (प्रकाशमान), सुवर्णसदृश, भानु (प्रकाशक), हिरण्यरेता (ब्रह्माण्डकी उत्पत्तिके बीज) और दिवाकर (रात्रिका अन्धकार दूर करके दिनका प्रकाश फैलानेवाले)।",
+        en: "He is Āditya (son of Aditi), Savitā (the inspirer), Sūrya (the supreme light), Khaga (sky-traveller), Pūṣan (nourisher), Gabhastimān (ray-possessor) — golden-hued, golden-seeded, maker of the day.",
+        note: "Savitā is the solar deity of the Gāyatrī Mantra — the most sacred verse of the Ṛg Veda (3.62.10), recited daily by initiated Hindus. Pūṣan is a Vedic deity of journeys and nourishment. Hiraṇya-retā (golden-seeded) refers to Sūrya's role in fertilising the earth through rain — the sun evaporates water, which returns as rain."
+      },
+      {
+        id: "V11", type: "stanza",
+        dev: "हरिदश्वः सहस्रार्चिः सप्तसप्तिर्मरीचिमान् ।\nतिमिरोन्मथनः शम्भुस्त्वष्टा मार्ताण्ड अंशुमान् ॥ ११ ॥",
+        iast: "haridaśvaḥ sahasrārciḥ sapta-saptir marīcimān ।\ntimironmathanaḥ śambhus tvaṣṭā mārtāṇḍa aṃśumān ॥ 11 ॥",
+        hi: "ये हरिदश्व (दिशाओंमें व्यापक अथवा हरे रंगके घोड़ेवाले), सहस्रार्चि (हजारों किरणोंसे सुशोभित), सप्तसप्ति (सात घोड़ोंवाले), मरीचिमान् (किरणोंसे सुशोभित), तिमिरोन्मथन (अन्धकारका नाश करनेवाले), शम्भु (कल्याणके उद्गम स्थान), त्वष्टा (भक्तोंका दुःख दूर करनेवाले), मार्तण्डक (ब्रह्माण्डको जीवन प्रदान करनेवाले) और अंशुमान् (किरण धारण करनेवाले) हैं।",
+        en: "He has tawny horses; he blazes with a thousand beams; he has seven steeds; he is radiant. He churns away darkness, bestows happiness, and is the craftsman Tvaṣṭṛ — Mārtāṇḍa, rich in rays.",
+        note: "The seven horses of the sun chariot represent the seven colours of light (or the seven days, or the seven lokas). Tvaṣṭṛ is the divine craftsman who shapes forms. Mārtāṇḍa is an ancient Vedic name for the sun, meaning 'born of a dead egg' — the myth in which Aditi cast away the eighth sun-egg, and from it Mārtāṇḍa emerged as a mortally born, hence luminous-in-mortality, solar being."
+      },
+      {
+        id: "V12", type: "stanza",
+        dev: "हिरण्यगर्भः शिशिरस्तपनो भास्करो रविः ।\nअग्निगर्भोऽदितेः पुत्रः शङ्खः शिशिरनाशनः ॥ १२ ॥",
+        iast: "hiraṇya-garbhaḥ śiśiras tapano bhāskaro raviḥ ।\nagni-garbho 'diteḥ putraḥ śaṅkhaḥ śiśira-nāśanaḥ ॥ 12 ॥",
+        hi: "ये हिरण्यगर्भ (ब्रह्मा), शिशिर (स्वभावसे ही सुख देनेवाले), तपन (गर्मी पैदा करनेवाले), अहस्कर (दिनकर), रवि (स्तुतिके पात्र), अग्निगर्भ (अग्निको गर्भमें धारण करनेवाले), अदितिपुत्र, शंख (आनन्दस्वरूप एवं व्यापक) और शिशिरनाशन (शीतका नाश करनेवाले) हैं।",
+        en: "Hiraṇyagarbha (the golden womb), Śiśira (the cool one), Tapana (the scorcher), Bhāskara (the illuminator), Ravi — fire-wombed, son of Aditi, the conch-white one, destroyer of winter cold.",
+        note: "Hiraṇyagarbha ('golden womb') is a Vedic name for the cosmic creative principle — the first light that arose at creation. Its use here equates Sūrya with the originating force of the universe. Son of Aditi: the Ādityas are a class of solar deities, children of the goddess Aditi (the boundless)."
+      },
+      {
+        id: "V13", type: "stanza",
+        dev: "व्योमनाथस्तमोभेदी ऋग्यजुःसामपारगः ।\nघनवृष्टिरपां मित्रो विन्ध्यवीथी प्लवङ्गमः ॥ १३ ॥",
+        iast: "vyoma-nāthas tamobhedī ṛg-yajuḥ-sāma-pāragaḥ ।\nghana-vṛṣṭir apāṃ mitro vindhya-vīthī plavaṅgamaḥ ॥ 13 ॥",
+        hi: "ये व्योमनाथ (आकाशके स्वामी), तमोभेदी (अन्धकारको नष्ट करनेवाले), ऋग्, यजुः और सामवेदके पारगामी, घनवृष्टि (घनी वृष्टिके कारण), अपां मित्र (जलको उत्पन्न करनेवाले) और विन्ध्यवीथीप्लवंगम (आकाशमें तीव्र वेगसे चलनेवाले) हैं।",
+        en: "Lord of the sky, piercer of darkness, master of Ṛg, Yajur, and Sāma Vedas; bringer of dense rain, friend of the waters, traverser of the Vindhya range, leaper through space.",
+        note: "The three Vedas — Ṛg (hymns), Yajur (sacrificial formulae), Sāma (chants) — are said to emerge from the sun's light. The Vindhya mountains divide northern and southern India; this line echoes the myth of sage Agastya (now giving the teaching!) who famously humbled the Vindhyas by asking them to bow until his return — and never returned south, leaving them permanently low."
+      },
+      {
+        id: "V14", type: "stanza",
+        dev: "आतपी मण्डली मृत्युः पिङ्गलः सर्वतापनः ।\nकविर्विश्वो महातेजाः रक्तः सर्वभवोद्भवः ॥ १४ ॥",
+        iast: "ātapī maṇḍalī mṛtyuḥ piṅgalaḥ sarvatāpanaḥ ।\nkavir viśvo mahātejāḥ raktaḥ sarva-bhavodbhavaḥ ॥ 14 ॥",
+        hi: "ये आतपी (घाम उत्पन्न करनेवाले), मण्डली (किरणसमूहको धारण करनेवाले), मृत्यु (मौतके कारण), पिंगल (भूरे रंगवाले), सर्वतापन (सबको ताप देनेवाले), कवि (त्रिकालदर्शी), विश्व (सर्वस्वरूप), महातेजस्वी, रक्त (लाल रंगवाले) और सर्वभवोद्भव (सबकी उत्पत्तिके कारण) हैं।",
+        en: "He is the blazing heat, the disc, Death itself; tawny-hued, the scorcher of all. He is the poet (Kavi), all-pervading, of vast radiance — ruddy, the origin of all that exists.",
+        note: "Mṛtyu (Death) is a startling inclusion — but consistent with the hymn's theology: the same force that sustains life also ends it. Kavi (poet/seer) points to the sun as the source of inspired knowledge. Rakta (red/ruddy) describes the sun at rising and setting — the moments of Sūrya worship in daily Sandhyāvandanam practice."
+      },
+      {
+        id: "V15", type: "stanza",
+        dev: "नक्षत्रग्रहताराणामधिपो विश्वभावनः ।\nतेजसामपि तेजस्वी द्वादशात्मन्नमोऽस्तु ते ॥ १५ ॥",
+        iast: "nakṣatra-graha-tārāṇām adhipo viśva-bhāvanaḥ ।\ntejasām api tejasvī dvādaśātman namo 'stu te ॥ 15 ॥",
+        hi: "ये नक्षत्र, ग्रह और तारोंके स्वामी, विश्वभावन (जगत्की रक्षा करनेवाले) और तेजस्वियोंमें भी अति तेजस्वी तथा द्वादशात्मा (बारह स्वरूपोंमें अभिव्यक्त) हैं। [इन सभी नामोंसे प्रसिद्ध सूर्यदेव!] आपको नमस्कार है।",
+        en: "Lord of the nakṣatras, planets, and stars; sustainer of the universe; the most radiant even among the radiant — O Dvādaśātman, salutations to you.",
+        note: "Dvādaśātman means 'the one whose self is twelvefold' — referring to the twelve Ādityas (solar deities), each associated with one month of the year. Their names vary across texts but represent the sun's twelve forms across the annual cycle. This verse closes the long litany of names with the first formal salutation, bridging to the salutation section."
+      }
+    ]
+  },
+  {
+    id: "s-salut", label: "Salutations",
+    verses: [
+      {
+        id: "V16", type: "stanza",
+        dev: "नमः पूर्वाय गिरये पश्चिमायाद्रये नमः ।\nज्योतिर्गणानां पतये दिनाधिपतये नमः ॥ १६ ॥",
+        iast: "namaḥ pūrvāya giraye paścimāyādraye namaḥ ।\njyotir-gaṇānāṃ pataye dina-adhipataye namaḥ ॥ 16 ॥",
+        hi: "पूर्वगिरि — उदयाचल — तथा पश्चिमगिरि — अस्ताचल — के रूपमें आपको नमस्कार है। ज्योतिर्गणों (ग्रहों और तारों) के स्वामी तथा दिनके अधिपति आपको प्रणाम है।",
+        en: "Salutations to the eastern mountain, salutations to the western mountain. Salutations to the lord of all luminaries, the sovereign of the day.",
+        note: "The eastern mountain is Udayācala (Mount of Rising) and the western is Astācala (Mount of Setting) — cosmological peaks in Hindu geography from which the sun rises and descends. Worshipping the sun at the horizon means saluting both the visible deity and the cosmic geography he inhabits."
+      },
+      {
+        id: "V17", type: "stanza",
+        dev: "जयाय जयभद्राय हर्यश्वाय नमो नमः ।\nनमो नमः सहस्रांशो आदित्याय नमो नमः ॥ १७ ॥",
+        iast: "jayāya jaya-bhadrāya hary-aśvāya namo namaḥ ।\nnamo namaḥ sahasrāṃśo ādityāya namo namaḥ ॥ 17 ॥",
+        hi: "आप जयस्वरूप तथा विजय और कल्याणके दाता हैं। आपके रथमें हरे रंगके घोड़े जुते रहते हैं। आपको बारम्बार नमस्कार है। सहस्रों किरणोंसे सुशोभित भगवान् सूर्य! आप अदितिके पुत्र होनेके कारण आदित्यनामसे प्रसिद्ध हैं। आपको बारम्बार प्रणाम है।",
+        en: "Salutations again and again to the victorious, to the auspiciously victorious, to the one with tawny steeds. Salutations, O thousand-rayed one, salutations to Āditya.",
+        note: "The repeated 'namo namaḥ' (salutations, salutations) reflects both liturgical intensity and the Vedic tradition that repetition multiplies the power of a sacred utterance. Sahasrāṃśa (thousand-rayed) became a popular epithet of Sūrya — his infinite rays representing the reach of divine knowledge and grace in all directions."
+      },
+      {
+        id: "V18", type: "stanza",
+        dev: "नम उग्राय वीराय सारङ्गाय नमो नमः ।\nनमः पद्मप्रबोधाय प्रचण्डाय नमोऽस्तु ते ॥ १८ ॥",
+        iast: "nama ugrāya vīrāya sāraṅgāya namo namaḥ ।\nnamaḥ padma-prabodhāya pracaṇḍāya namo 'stu te ॥ 18 ॥",
+        hi: "उग्र (अभक्तोंके लिये भयंकर), वीर (शक्ति-सम्पन्न) और सारंग (शीघ्रगामी) सूर्यदेवको नमस्कार है। कमलोंको विकसित करनेवाले प्रचण्ड तेजधारी मार्तण्डको प्रणाम है।",
+        en: "Salutations to the fierce one, the heroic, the swift-moving. Salutations to the one at whose rising the lotus blooms, to Mārtāṇḍa.",
+        note: "Padma-prabodha ('lotus-awakener') is a tenderly observed natural image: the lotus flower opens precisely at sunrise and closes at dusk, its life rhythmed entirely by the sun. In Purāṇic iconography, Sūrya himself holds two lotuses. The lotus is also symbolic of spiritual awakening — the soul that opens in response to divine light."
+      },
+      {
+        id: "V19", type: "stanza",
+        dev: "ब्रह्मेशानाच्युतेशाय सूर्यायादित्यवर्चसे ।\nभास्वते सर्वभक्षाय रौद्राय वपुषे नमः ॥ १९ ॥",
+        iast: "brahmeśānācyuteśāya sūryāyāditya-varcase ।\nbhāsvate sarva-bhakṣāya raudrāya vapuṣe namaḥ ॥ 19 ॥",
+        hi: "(परात्पर-रूपमें) आप ब्रह्मा, शिव और विष्णुके भी स्वामी हैं। यह सूर्यमण्डल आपका ही तेज है, आप प्रकाशसे परिपूर्ण हैं, सबको स्वाहा कर देनेवाला अग्नि आपका ही स्वरूप है, आप रौद्ररूप धारण करनेवाले हैं। आपको नमस्कार है।",
+        en: "Salutations to the lord of Brahmā, Śiva, and Acyuta (Viṣṇu); to Sūrya of Āditya-splendour; to the radiant, all-consuming one of Rudra-like form.",
+        note: "Acyuta ('the unfailing') is a name of Viṣṇu. The verse names the Trimūrti — Brahmā, Viṣṇu, Śiva — as subordinate to Sūrya, a bold theological position. Sarva-bhakṣa ('all-devouring') refers to the sun's ultimate role in the dissolution of the cosmos — even the gods are consumed in the solar fire at the end of time."
+      },
+      {
+        id: "V20", type: "stanza",
+        dev: "तमोघ्नाय हिमघ्नाय शत्रुघ्नायामितात्मने ।\nकृतघ्नघ्नाय देवाय ज्योतिषां पतये नमः ॥ २० ॥",
+        iast: "tamoghnāya himaghnāya śatru-ghnāyāmitātmane ।\nkṛtaghna-ghnāya devāya jyotiṣāṃ pataye namaḥ ॥ 20 ॥",
+        hi: "आप अज्ञान और अन्धकारके नाशक, जडता एवं शीतके निवारक तथा शत्रुका नाश करनेवाले हैं। आपका स्वरूप अप्रमेय है। आप कृतघ्नोंका नाश करनेवाले, सम्पूर्ण ज्योतियोंके स्वामी और देवस्वरूप हैं। आपको नमस्कार है।",
+        en: "Salutations to the destroyer of darkness, the destroyer of cold, the destroyer of enemies — to the infinite Self; to the god who destroys the ungrateful; to the lord of all luminous bodies.",
+        note: "Kṛtaghna-ghna ('destroyer of the ungrateful') is a striking moral epithet: the sun that gives life to all expects, as it were, acknowledgement. The daily Sandhyāvandanam practice — sunrise and sunset prayer — is precisely this acknowledgement. To live by solar light without gratitude is kṛtaghnatā, ingratitude."
+      },
+      {
+        id: "V21", type: "stanza",
+        dev: "तप्तचामीकराभाय हरये विश्वकर्मणे ।\nनमस्तमोऽभिनिघ्नाय रुचये लोकसाक्षिणे ॥ २१ ॥",
+        iast: "tapta-cāmīkarābhāya haraye viśva-karmaṇe ।\nnamas tamo-'bhinighnāya rucaye loka-sākṣiṇe ॥ 21 ॥",
+        hi: "आपकी प्रभा तपाये हुए सुवर्णके समान है। आप हरि (अज्ञानका हरण करनेवाले) और विश्वकर्मा (संसारकी सृष्टि करनेवाले) हैं। आप तमके नाशक, प्रकाशस्वरूप और जगत्के साक्षी हैं। आपको नमस्कार है।",
+        en: "Salutations to the one who gleams like molten gold, to the fire, to the architect of the universe. Salutations to the one who utterly destroys darkness, to luminosity itself — the witness of all the worlds.",
+        note: "Loka-sākṣin ('world-witness') is a profound Vedāntic epithet. Just as pure consciousness witnesses all without being affected by what it sees, the sun illuminates everything without becoming what it illuminates. This becomes an image of the ātman — the witnessing Self that underlies all experience."
+      }
+    ]
+  },
+  {
+    id: "s-cosmic", label: "Cosmic Function",
+    verses: [
+      {
+        id: "V22", type: "stanza",
+        dev: "नाशयत्येष वै भूतं तदेव सृजति प्रभुः ।\nपायत्येष तपत्येष वर्षत्येष गभस्तिभिः ॥ २२ ॥",
+        iast: "nāśayaty eṣa vai bhūtaṃ tad eva sṛjati prabhuḥ ।\npāyaty eṣa tapaty eṣa varṣaty eṣa gabhastibhiḥ ॥ 22 ॥",
+        hi: "रघुनन्दन! ये भगवान् सूर्य ही सम्पूर्ण भूतोंका संहार, सृष्टि और पालन करते हैं। ये ही अपनी किरणोंसे गर्मी उत्पन्न करते और वर्षा करते हैं।",
+        en: "This Lord destroys all that exists, and then creates it again. He nourishes; he gives heat; through his rays he sends down rain.",
+        note: "In three words — nāśayati (destroys), sṛjati (creates), pāyati (nourishes) — the verse encapsulates the entire Trimūrti function. The hydrology is precise: the sun's heat evaporates ocean water, which rises as clouds and falls as rain. Ancient Vedic thought recognised this cycle long before modern meteorology."
+      },
+      {
+        id: "V23", type: "stanza",
+        dev: "एष सुप्तेषु जागर्ति भूतेषु परिनिष्ठितः ।\nएष एवाग्निहोत्रं च फलं चैवाग्निहोत्रिणाम् ॥ २३ ॥",
+        iast: "eṣa supteṣu jāgarti bhūteṣu pariniṣṭhitaḥ ।\neṣa evāgnihotraṃ ca phalaṃ caivāgnihotriṇām ॥ 23 ॥",
+        hi: "ये सब भूतोंमें अन्तर्यामीरूपसे स्थित होकर उनके सो जानेपर भी जागते रहते हैं। ये ही अग्निहोत्र तथा अग्निहोत्रियोंको मिलनेवाले फल हैं।",
+        en: "He remains awake within all sleeping beings, abiding in them completely. He himself is the Agnihotra fire-sacrifice and the fruit it bestows on those who perform it.",
+        note: "Supteṣu jāgarti ('wakeful within the sleeping') is a profound statement — it echoes the Māṇḍūkya Upaniṣad's description of pure consciousness that persists through all states including deep sleep. The Agnihotra is the most ancient Vedic sacrifice: twice-daily offerings of milk into fire at sunrise and sunset — itself a solar rite."
+      },
+      {
+        id: "V24", type: "stanza",
+        dev: "देवाश्च क्रतवश्चैव क्रतूनां फलमेव च ।\nयानि कृत्यानि लोकेषु सर्वेषु परमप्रभुः ॥ २४ ॥",
+        iast: "devāś ca kratavaś caiva kratūnāṃ phalam eva ca ।\nyāni kṛtyāni lokeṣu sarveṣu parama-prabhuḥ ॥ 24 ॥",
+        hi: "(यज्ञमें भाग ग्रहण करनेवाले) देवता, यज्ञ और यज्ञोंके फल भी ये ही हैं। सम्पूर्ण लोकोंमें जितनी क्रियाएँ होती हैं, उन सबका फल देनेमें ये ही परम प्रभु हैं।",
+        en: "The Vedas, the sacrifices, the fruits of all sacrifices — and every action performed in the worlds — all of this is governed by the lord Ravi.",
+        note: "This is the culminating statement of the hymn's theology: the sun is not merely a cosmic force but the ground of all sacred knowledge and action. The Vedas are said to have emanated from the sun's light; the sacrificial fire is his earthly counterpart; and the fruits of all karma ultimately flow back to him."
+      }
+    ]
+  },
+  {
+    id: "s-phala", label: "Fruits & Conclusion",
+    verses: [
+      {
+        id: "V25", type: "stanza",
+        dev: "एनमापत्सु कृच्छ्रेषु कान्तारेषु भयेषु च ।\nकीर्तयन् पुरुषः कश्चिन्नावसीदति राघव ॥ २५ ॥",
+        iast: "enam āpatsu kṛcchreṣu kāntāreṣu bhayeṣu ca ।\nkīrtayan puruṣaḥ kaścin nāvasīdati rāghava ॥ 25 ॥",
+        hi: "राघव! विपत्तिमें, कष्टमें, दुर्गम मार्गमें तथा भयके किसी भी अवसरपर जो कोई पुरुष इन सूर्यदेवका कीर्तन करता है, उसे दुःख नहीं भोगना पड़ता।",
+        en: "O Rāghava, whoever recites this hymn in times of calamity, hardship, in the wilderness, or in fear — that person will not be overcome.",
+        note: "The second phalaśruti begins here. Kāntāra (wilderness/forest) has both literal and symbolic force — the forest is the liminal, dangerous space in Indian epic literature, where exiles wander and demons lurk. Rāma himself spent fourteen years in the forest. This promise is thus directly relevant to him."
+      },
+      {
+        id: "V26", type: "stanza",
+        dev: "पूजयस्वैनमेकाग्रो देवदेवं जगत्पतिम् ।\nएतत् त्रिगुणितं जप्त्वा युद्धेषु विजयिष्यसि ॥ २६ ॥",
+        iast: "pūjayasvanam ekāgro deva-devaṃ jagat-patim ।\netat triguṇitaṃ japtvā yuddheṣu vijayiṣyasi ॥ 26 ॥",
+        hi: "इसलिये तुम एकाग्रचित्त होकर इन देवाधिदेव जगदीश्वरकी पूजा करो। इस आदित्यहृदयका तीन बार जप करनेसे कोई भी युद्धमें विजय प्राप्त कर सकता है।",
+        en: "Worship this lord of lords, master of the universe, with single-pointed devotion. Chant this thrice, and you shall be victorious in battle.",
+        note: "Triguṇitam (threefold) — the traditional instruction to recite the Āditya Hṛdayam three times. Three is the minimum auspicious repetition in Vedic ritual. The requirement for ekāgra (one-pointed) mind reflects the understanding that the power of mantra depends not on mechanical repetition but on the quality of attention brought to it."
+      },
+      {
+        id: "V27", type: "stanza",
+        dev: "अस्मिन् क्षणे महाबाहो रावणं त्वं जहिष्यसि ।\nएवमुक्त्वा ततोऽगस्त्यो जगाम स यथागतम् ॥ २७ ॥",
+        iast: "asmin kṣaṇe mahābāho rāvaṇaṃ tvaṃ jahiṣyasi ।\nevam uktvā tato 'gastyo jagāma sa yathāgatam ॥ 27 ॥",
+        hi: "महाबाहो! तुम इसी क्षण रावणका वध कर सकोगे। यह कहकर अगस्त्यजी जैसे आये थे, उसी प्रकार चले गये।",
+        en: "O mighty-armed one, this very moment you shall slay Rāvaṇa. Having spoken thus, Agastya departed the way he had come.",
+        note: "The sage's sudden departure is as narratively striking as his arrival. Having transmitted the teaching and the prophecy, Agastya vanishes — leaving Rāma alone with the hymn and the battle. The teacher's work is done; now it is the student who must act. This is the classic guru-śiṣya transmission: knowledge given, gone, now yours."
+      },
+      {
+        id: "V28", type: "stanza",
+        dev: "एतच्छ्रुत्वा महातेजा नष्टशोकोऽभवत्तदा ।\nधारयामास सुप्रीतो राघवः प्रयतात्मवान् ॥ २८ ॥",
+        iast: "etac chrutvā mahātejā naṣṭa-śoko 'bhavat tadā ।\ndhārayām āsa suprīto rāghavaḥ prayatātmavān ॥ 28 ॥",
+        hi: "उनका उपदेश सुनकर महातेजस्वी श्रीरामचन्द्रजीका शोक दूर हो गया। उन्होंने प्रसन्न होकर शुद्धचित्तसे आदित्यहृदयको हृदयमें धारण किया।",
+        en: "Having heard this, the radiant Rāghava was freed from grief. Greatly gladdened, his mind now composed and pure, he took the teaching to heart.",
+        note: "Naṣṭa-śoka (grief destroyed) — the immediate fruit of the teaching. Dhārayāmāsa (he held/retained) has a technical sense: the fixing of a mantra in memory and heart through devoted attention. The compound prayatātmavān ('one whose self is held in readiness') describes the ideal inner state for spiritual practice: alert, purified, concentrated."
+      },
+      {
+        id: "V29", type: "stanza",
+        dev: "आदित्यं प्रेक्ष्य जप्त्वा तु परं हर्षमवाप्तवान् ।\nत्रिराचम्य शुचिर्भूत्वा धनुरादाय वीर्यवान् ॥ २९ ॥",
+        iast: "ādityaṃ prekṣya japtvā tu paraṃ harṣam avāptavān ।\ntrirācamya śucir bhūtvā dhanurādāya vīryavān ॥ 29 ॥",
+        hi: "तीन बार आचमन करके शुद्ध हो भगवान् सूर्यकी ओर देखते हुए इसका तीन बार जप किया। इससे उन्हें बड़ा हर्ष हुआ। फिर परम पराक्रमी श्रीरामने धनुष उठाया।",
+        en: "Gazing upon the sun with devotion, he chanted the hymn and was filled with supreme joy. Having performed ācamana (ritual sipping of water) thrice and become pure, the mighty hero took up his bow.",
+        note: "Ācamana — the ritual sipping of water three times — is a purificatory act performed before worship, sacrifice, and sacred recitation. Rāma here performs the full liturgical preparation: vision of the deity (darśana), chanting, purification. The bow taken up is not merely a weapon but a symbol of Kṣatriya dharma — righteous action."
+      },
+      {
+        id: "V30", type: "stanza",
+        dev: "रावणं प्रेक्ष्य हृष्टात्मा जयार्थ समुपागमत् ।\nसर्वयत्नेन महता वृतस्तस्य वधेऽभवत् ॥ ३० ॥",
+        iast: "rāvaṇaṃ prekṣya hṛṣṭātmā jayārtha samupāgamat ।\nsarva-yatnena mahatā vṛtas tasya vadhe 'bhavat ॥ 30 ॥",
+        hi: "रावणकी ओर देखकर उत्साहपूर्वक विजय पानेके लिये वे आगे बढ़े और पूरा प्रयत्न करके रावणके वधका दृढ़ निश्चय किया।",
+        en: "Seeing Rāvaṇa approach to fight, Rāma's heart was now uplifted. He advanced to battle with all his great effort, resolved in his purpose to destroy him.",
+        note: "The contrast with v.1 is complete. The first verse showed Rāma exhausted and lost in thought; this verse shows him joyful (hṛṣṭātmā), resolute (dhṛta), and purposeful. The hymn has done its work. Vālmīki is a precise psychologist: the transformation is not miraculous but devotional — a reordering of the inner state."
+      },
+      {
+        id: "V31", type: "stanza",
+        dev: "अथ रविरवदन्निरीक्ष्य रामं\nमुदितमनाः परमं प्रहृष्यमाणः ।\nनिशिचरपतिसङ्क्षयं विदित्वा\nसुरगणमध्यगतो वचस्त्वरेति ॥ ३१ ॥",
+        iast: "atha ravir avadann irīkṣya rāmaṃ\nmudita-manāḥ paramaṃ prahṛṣyamāṇaḥ ।\nniśicara-pati-saṅkṣayaṃ viditvā\nsura-gaṇa-madhya-gato vacas tvareti ॥ 31 ॥",
+        hi: "उस समय देवताओंके मध्यमें खड़े हुए भगवान् सूर्यने प्रसन्न होकर श्रीरामचन्द्रजीकी ओर देखा और निशाचरराज रावणके विनाशका समय निकट जानकर हर्षपूर्वक कहा — रघुनन्दन! अब जल्दी करो।",
+        en: "Then the Sun, beholding Rāma with a delighted and supremely joyful mind — knowing that the destruction of the lord of night-stalkers was at hand — standing in the midst of the host of gods, spoke the word: 'Make haste!'",
+        note: "The final verse breaks from the Anuṣṭup metre into a longer Indravajrā/Upajāti metre, giving it a distinctive and solemn cadence. Niśicara-pati (lord of night-wanderers) is a kenning for Rāvaṇa: rākṣasas move by night. The Sun's single exhortation — tvara iti ('hasten!') — is among the most charged moments in the Rāmāyaṇa. The deity who has just been praised now speaks. The poem becomes alive."
+      }
+    ]
+  }
+];
+
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+var activeScript  = localStorage.getItem('ah_script') || 'dev';
+var activeVerseId = null;
+var allVerses     = [];
+var fontSize      = parseFloat(localStorage.getItem('ah_fs') || '1');
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  setFontSize(fontSize);
+  buildVerses();
+  switchScript(activeScript);
+  setActive(allVerses[0] && allVerses[0].id, false);
+  bindSwitcher();
+  bindFontBtns();
+  bindMobileSelect();
+  bindKeys();
+  window.addEventListener('scroll', onScroll, { passive: true });
+});
+
+// ─────────────────────────────────────────────────────────────
+// FONT SIZE
+// ─────────────────────────────────────────────────────────────
+function setFontSize(val) {
+  fontSize = Math.min(1.5, Math.max(0.8, val));
+  document.documentElement.style.setProperty('--fs', fontSize + 'rem');
+  localStorage.setItem('ah_fs', fontSize);
+}
+
+function bindFontBtns() {
+  document.getElementById('btnFontUp').onclick = function() {
+    setFontSize(Math.round((fontSize + 0.1) * 10) / 10);
+  };
+  document.getElementById('btnFontDown').onclick = function() {
+    setFontSize(Math.round((fontSize - 0.1) * 10) / 10);
+  };
+}
+
+// ─────────────────────────────────────────────────────────────
+// BUILD
+// ─────────────────────────────────────────────────────────────
+function buildVerses() {
+  var col = document.getElementById('verseCol');
+  allVerses = [];
+
+  SECTIONS.forEach(function(sec) {
+    var heading = document.createElement('div');
+    heading.className = 'section-heading';
+    heading.id = sec.id;
+    heading.textContent = sec.label;
+    col.appendChild(heading);
+
+    sec.verses.forEach(function(v) {
+      allVerses.push(v);
+      col.appendChild(makeCard(v));
+    });
+  });
+
+  var bar = document.createElement('div');
+  bar.className = 'nav-bar';
+  bar.innerHTML =
+    '<button class="nav-btn" id="btnPrev">\u2190 Previous</button>' +
+    '<span class="verse-counter" id="verseCounter"></span>' +
+    '<button class="nav-btn" id="btnNext">Next \u2192</button>';
+  col.appendChild(bar);
+
+  document.getElementById('btnPrev').onclick = function() { navigate(-1); };
+  document.getElementById('btnNext').onclick = function() { navigate(1); };
+}
+
+function makeCard(v) {
+  var card = document.createElement('div');
+  var isStanza = (v.type === 'stanza');
+  card.className = 'verse-card' + (isStanza ? ' is-stanza' : '');
+  card.dataset.id = v.id;
+  card.setAttribute('tabindex', '0');
+
+  var numLabel  = v.id.replace('V', '') + ' / 31';
+  var typeLabel = 'Stanza';
+
+  card.innerHTML =
+    '<div class="card-top">' +
+      '<span class="verse-num">' + numLabel + '</span>' +
+      '<span class="verse-type">' + typeLabel + '</span>' +
+    '</div>' +
+    '<div class="layer layer-dev">'  + nl(v.dev)  + '</div>' +
+    '<div class="layer layer-iast">' + nl(v.iast) + '</div>' +
+    '<div class="layer layer-hi">'   + nl(v.hi)   + '</div>' +
+    '<div class="layer layer-en">'   + nl(v.en)   + '</div>' +
+    (v.note ? '<div class="verse-note">' + v.note + '</div>' : '');
+
+  card.addEventListener('click', function() {
+    setActive(v.id);
+  });
+  card.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(v.id); }
+  });
+
+  return card;
+}
+
+function nl(t) {
+  return t.replace(/\n/g, '<br>');
+}
+
+// ─────────────────────────────────────────────────────────────
+// ACTIVE
+// ─────────────────────────────────────────────────────────────
+function setActive(id, doScroll) {
+  if (!id) return;
+  if (doScroll === undefined) doScroll = true;
+  activeVerseId = id;
+
+  document.querySelectorAll('.verse-card').forEach(function(c) {
+    c.classList.remove('is-active');
+  });
+
+  var card = document.querySelector('.verse-card[data-id="' + id + '"]');
+  if (card) {
+    card.classList.add('is-active');
+    if (doScroll) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  var idx = -1;
+  for (var i = 0; i < allVerses.length; i++) {
+    if (allVerses[i].id === id) { idx = i; break; }
+  }
+
+  var counter = document.getElementById('verseCounter');
+  if (counter) counter.textContent = (idx + 1) + ' of ' + allVerses.length;
+
+  var btnPrev = document.getElementById('btnPrev');
+  var btnNext = document.getElementById('btnNext');
+  if (btnPrev) btnPrev.disabled = (idx === 0);
+  if (btnNext) btnNext.disabled = (idx === allVerses.length - 1);
+
+  highlightSection(id);
+  setProgress(idx);
+}
+
+function highlightSection(id) {
+  var found = null;
+  SECTIONS.forEach(function(s) {
+    s.verses.forEach(function(v) { if (v.id === id) found = s; });
+  });
+  document.querySelectorAll('.section-list a').forEach(function(a) {
+    a.classList.toggle('active', found && a.dataset.sec === found.id);
+  });
+}
+
+function navigate(dir) {
+  var idx = -1;
+  for (var i = 0; i < allVerses.length; i++) {
+    if (allVerses[i].id === activeVerseId) { idx = i; break; }
+  }
+  var next = allVerses[idx + dir];
+  if (next) setActive(next.id);
+}
+
+// ─────────────────────────────────────────────────────────────
+// PROGRESS
+// ─────────────────────────────────────────────────────────────
+function setProgress(idx) {
+  var pct = allVerses.length > 1 ? (idx / (allVerses.length - 1)) * 100 : 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  var t = document.getElementById('progressText');
+  if (t) t.textContent = Math.round(pct) + '% complete';
+}
+
+function onScroll() {
+  var total = document.body.scrollHeight - window.innerHeight;
+  if (total > 0) {
+    var pct = (window.scrollY / total) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    var t = document.getElementById('progressText');
+    if (t) t.textContent = Math.round(pct) + '% complete';
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// SCRIPT SWITCHER
+// ─────────────────────────────────────────────────────────────
+function switchScript(s) {
+  activeScript = s;
+  document.querySelectorAll('.script-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.s === s);
+  });
+  document.querySelectorAll('.layer').forEach(function(l) { l.classList.remove('show'); });
+  document.querySelectorAll('.layer-' + s).forEach(function(l) { l.classList.add('show'); });
+  localStorage.setItem('ah_script', s);
+}
+
+function bindSwitcher() {
+  document.querySelectorAll('.script-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { switchScript(btn.dataset.s); });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// MOBILE SELECT
+// ─────────────────────────────────────────────────────────────
+function bindMobileSelect() {
+  document.getElementById('mobileSelect').addEventListener('change', function(e) {
+    var el = document.getElementById(e.target.value);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// KEYBOARD
+// ─────────────────────────────────────────────────────────────
+function bindKeys() {
+  document.addEventListener('keydown', function(e) {
+    if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(e.target.tagName) >= 0) return;
+    if (e.key === 'ArrowDown' || e.key === 'j') navigate(1);
+    if (e.key === 'ArrowUp'   || e.key === 'k') navigate(-1);
+  });
+}
+</script>
+</body>
+</html>
