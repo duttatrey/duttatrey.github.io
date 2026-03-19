@@ -38,6 +38,16 @@ A small, clean reader for Hindu devotional texts — presented in Devanāgarī, 
 
 ---
 
+## This is a living site
+
+This collection is not complete and is not meant to be — it will grow over time. The current texts centre on Durgā/Devī, Hanumān, and Sūrya, but the plan is to expand to other deities (Śiva, among others) and other forms of devotional text beyond Ārtī, Chalīsā, and Stotra.
+
+If there is a text you would like to see added, please write in — that is genuinely the best way to shape what comes next.
+
+📧 **[duttatrey.nath@gmail.com](mailto:duttatrey.nath@gmail.com)**
+
+---
+
 ## A note on accuracy
 
 These texts have been sourced from various places on the internet and compiled here for personal use and ease of reading. **They may contain errors** — in the Devanāgarī, the transliteration, or the translation. I have done my best to cross-check, but I make no claim to scholarly authority.
@@ -66,4 +76,3 @@ Texts-Stuti/
 ---
 
 *सधीरं पठ · Read slowly.*
-
