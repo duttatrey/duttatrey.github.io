@@ -1,0 +1,263 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Texts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+Devanagari:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1814;
+      --paper: #f9f7f3;
+      --muted: #8a8480;
+      --rule: #e0ddd8;
+      --accent: #b85c38;
+      --card-bg: #ffffff;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 3.5rem 2rem 2rem;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .site-eyebrow {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .site-title {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .site-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .site-subtitle {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    .header-rule {
+      margin-top: 2.5rem;
+      border: none;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 2.5rem 2rem 4rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.6rem;
+    }
+
+    /* ── Text Grid ── */
+    .texts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    .text-card {
+      background: var(--card-bg);
+      padding: 2rem 1.8rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: background 0.18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .text-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.28s ease;
+    }
+
+    .text-card:hover { background: #fdfcfa; }
+    .text-card:hover::after { width: 100%; }
+
+    .card-devanagari {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .card-meta {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.2rem;
+    }
+
+    .card-chapters {
+      margin-top: auto;
+      padding-top: 1.2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ── Add card placeholder ── */
+    .text-card.placeholder {
+      border: 1.5px dashed var(--rule);
+      background: transparent;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+      font-style: italic;
+      font-size: 0.95rem;
+      cursor: default;
+      min-height: 160px;
+    }
+
+    .text-card.placeholder::after { display: none; }
+
+    .plus-icon {
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--rule);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 1.8rem 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ── Fade-in animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header { animation: fadeUp 0.6s ease both; }
+    .section-label { animation: fadeUp 0.6s 0.15s ease both; }
+    .texts-grid { animation: fadeUp 0.6s 0.25s ease both; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="site-eyebrow">पाठसंग्रह · A Reading Collection</p>
+    <h1 class="site-title">Sacred <em>Texts</em></h1>
+    <p class="site-subtitle">A quiet place to read. Switch between Devanagari, IAST, and English at any time.</p>
+    <hr class="header-rule">
+  </header>
+
+  <main>
+    <p class="section-label">Available Texts</p>
+
+    <div class="texts-grid">
+
+      <!-- Durga Chalisa -->
+      <a href="durga-chalisa.html" class="text-card">
+        <span class="card-devanagari">दुर्गा चालीसा</span>
+        <span class="card-title">Durgā Chalīsā</span>
+        <span class="card-meta">Devīdāsa · 40 chaupāī</span>
+        <span class="card-chapters">Begin reading →</span>
+      </a>
+
+      <!-- Hanuman Chalisa -->
+      <a href="hanuman-chalisa.html" class="text-card">
+        <span class="card-devanagari">हनुमान चालीसा</span>
+        <span class="card-title">Hanumān Chalīsā</span>
+        <span class="card-meta">Tulsīdās · 40 chaupāī + 2 dohā</span>
+        <span class="card-chapters">Begin reading →</span>
+      </a>
+
+      <!-- Aarti: Ambe Tu Hai -->
+      <a href="aarti-ambe-tu-hai.html" class="text-card">
+        <span class="card-devanagari">अम्बे तू है जगदम्बे काली</span>
+        <span class="card-title">Ambe Tu Hai Jagadambe Kālī</span>
+        <span class="card-meta">Traditional ārtī · Refrain + 4 stanzas</span>
+        <span class="card-chapters">Begin reading →</span>
+      </a>
+
+      <!-- Aarti: Jai Ambe Gauri -->
+      <a href="aarti-jai-ambe-gauri.html" class="text-card">
+        <span class="card-devanagari">जय अम्बे गौरी</span>
+        <span class="card-title">Jai Ambe Gaurī</span>
+        <span class="card-meta">Śivānanda Svāmī · Refrain + 11 stanzas</span>
+        <span class="card-chapters">Begin reading →</span>
+      </a>
+
+    </div>
+
+    </div>
+  </main>
+
+  <footer>
+    Read slowly. &nbsp;·&nbsp; सधीरं पठ।
+  </footer>
+
+</body>
+</html>
