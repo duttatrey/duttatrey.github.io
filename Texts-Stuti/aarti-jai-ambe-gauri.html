@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jai Ambe Gaurī · Reader · Stuti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+Devanagari:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/reader.css">
+  <style>
+    :root { --accent: #5a3472; --accent-light: #ede7f5; }
+  </style>
+</head>
+<body>
+<div id="progressBar"></div>
+<div class="topbar">
+  <div class="topbar-row1">
+    <a href="texts.html" class="back-link">← All Texts</a>
+    <div class="text-title-bar">जय अम्बे गौरी &nbsp;·&nbsp; Ārtī</div>
+    <div class="font-controls">
+      <button class="font-btn" id="btnFontDown">A−</button>
+      <button class="font-btn" id="btnFontUp">A+</button>
+    </div>
+  </div>
+  <div class="switcher-row">
+    <span class="switcher-label">Script</span>
+    <div class="script-switcher" role="group">
+      <button class="script-btn" data-s="dev">देवनागरी</button>
+      <button class="script-btn" data-s="iast">IAST</button>
+      <button class="script-btn" data-s="en">English</button>
+    </div>
+    <span class="progress-text" id="progressText"></span>
+  </div>
+</div>
+<div class="reader-layout">
+  <nav class="sidebar">
+    <p class="nav-label">Sections</p>
+    <ul class="section-list">
+      <li><a href="#s-refrain"  data-sec="s-refrain">Refrain</a></li>
+      <li><a href="#s-form"     data-sec="s-form">Form &amp; Beauty (1–3)</a></li>
+      <li><a href="#s-deeds"    data-sec="s-deeds">Deeds (4–7)</a></li>
+      <li><a href="#s-glory"    data-sec="s-glory">Glory (8–11)</a></li>
+      <li><a href="#s-closing"  data-sec="s-closing">Closing</a></li>
+    </ul>
+  </nav>
+  <div class="verse-column" id="verseCol">
+    <div class="mobile-select">
+      <select id="mobileSelect">
+        <option value="s-refrain">Refrain</option>
+        <option value="s-form">Form &amp; Beauty (1–3)</option>
+        <option value="s-deeds">Deeds (4–7)</option>
+        <option value="s-glory">Glory (8–11)</option>
+        <option value="s-closing">Closing</option>
+      </select>
+    </div>
+  </div>
+</div>
+<footer>ॐ जय अम्बे गौरी &nbsp;·&nbsp; Attributed to Śivānanda Svāmī &nbsp;·&nbsp; Traditional Durgā Ārtī</footer>
+<script>
+const PAGE_META = { lsKey: 'jag_script' };
+var SECTIONS = [
+  {
+    id: "s-refrain", label: "Refrain",
+    verses: [
+      { id:"R", type:"refrain",
+        dev:"जय अम्बे गौरी, मैया जय श्यामा गौरी।\nतुमको निशदिन ध्यावत, हरि ब्रह्मा शिवरी॥\nॐ जय अम्बे गौरी।",
+        iast:"jaya ambe gaurī, maiyā jaya śyāmā gaurī ।\ntumako niśadina dhyāvata, hari brahmā śivarī ॥\noṃ jaya ambe gaurī ।",
+        en:"Victory to Ambā Gaurī, O Mother, victory to Śyāmā Gaurī!\nUpon you meditate day and night Hari, Brahmā, and Śiva.\nOṃ, victory to Ambā Gaurī.",
+        note:"Gaurī means 'the golden/fair one' — an epithet of Pārvatī. Śyāmā means 'the dark one' — an epithet of Kālī. The refrain holds both opposites at once: the Goddess is fair and dark, serene and fierce. That Viṣṇu (Hari), Brahmā, and Śiva all meditate on her establishes her supremacy over the entire Trinity."
+      }
+    ]
+  },
+  {
+    id: "s-form", label: "Form & Beauty (1–3)",
+    verses: [
+      { id:"S1", type:"stanza",
+        dev:"मांग सिंदूर विराजत, टीको मृगमद को।\nउज्जवल से दोऊ नैना, चंद्रवदन नीको॥\nॐ जय अम्बे गौरी।",
+        iast:"māṃga siṃdūra virājata, ṭīko mṛgamada ko ।\nujjvala se doū nainā, candravadana nīko ॥\noṃ jaya ambe gaurī ।",
+        en:"Sindūr (vermilion) adorns your parting, a mark of musk-deer fragrance on your brow.\nYour two eyes shine radiantly, your moon-like face is beautiful.\nOṃ, victory to Ambā Gaurī.",
+        note:"Sindūr in the parting is the mark of an auspicious married woman in Indian tradition — here signalling Gaurī's identity as Śiva's consort Pārvatī. Mṛgamada (musk from the deer) is one of the most prized fragrances in Sanskrit poetry, suggesting the Goddess's divine perfume."
+      },
+      { id:"S2", type:"stanza",
+        dev:"कनक समान कलेवर, रक्ताम्बर राजै।\nरक्तपुष्प गल माला, कंठन पर साजै॥\nॐ जय अम्बे गौरी।",
+        iast:"kanaka samāna kalevara, raktāmbara rājai ।\nraktapuṣpa galamālā, kaṃṭhana para sājai ॥\noṃ jaya ambe gaurī ।",
+        en:"Your body shines like molten gold, and you are resplendent in red garments.\nA garland of red flowers adorns and beautifies your throat.\nOṃ, victory to Ambā Gaurī.",
+        note:"Red (rakta) is the defining colour of Durgā's worship — red flowers, red cloth, red sindūr. Red symbolises Śakti, life-force, and the blood of battle. The golden body alongside red garments mirrors her dual nature: radiant divine beauty clothed in the colour of power."
+      },
+      { id:"S3", type:"stanza",
+        dev:"केहरि वाहन राजत, खड्ग खप्पर धारी।\nसुर-नर-मुनिजन सेवत, तिनके दुःखहारी॥\nॐ जय अम्बे गौरी।",
+        iast:"kehari vāhana rājata, khaḍga khappara dhārī ।\nsura-nara-munijana sevata, tinake duḥkhahārī ॥\noṃ jaya ambe gaurī ।",
+        en:"She is resplendent riding the lion as her mount, carrying sword and skull-cup.\nGods, humans, and sages all serve her — and she removes their every sorrow.\nOṃ, victory to Ambā Gaurī.",
+        note:"The lion (keharī/siṃha) as her vāhana (vehicle) signifies sovereignty, fearlessness, and the mastery of the ego. The sword (khaḍga) destroys ignorance; the skull-cup (khappara) holds the nectar of liberation. That gods themselves bow to her is the ārtī's constant theological refrain."
+      }
+    ]
+  },
+  {
+    id: "s-deeds", label: "Deeds (4–7)",
+    verses: [
+      { id:"S4", type:"stanza",
+        dev:"कानन कुंडल शोभित, नासाग्रे मोती।\nकोटिक चंद्र दिवाकर, सम राजत ज्योति॥\nॐ जय अम्बे गौरी।",
+        iast:"kānana kuṃḍala śobhita, nāsāgre motī ।\nkoṭika candra divākara, sama rājata jyoti ॥\noṃ jaya ambe gaurī ।",
+        en:"Ear-ornaments beautify her, and a pearl gleams at the tip of her nose.\nHer radiance outshines the combined light of crores of moons and suns.\nOṃ, victory to Ambā Gaurī.",
+        note:"The image of the Goddess's luminosity surpassing millions (koṭika) of moons and suns together is a standard hyperbole of Sanskrit stuti (praise poetry), emphasising that her light is not physical but metaphysical — the light of pure consciousness."
+      },
+      { id:"S5", type:"stanza",
+        dev:"शुंभ निशुंभ विदारे, महिषासुर घाती।\nधूम्रविलोचन नैना, निशदिन मदमाती॥\nॐ जय अम्बे गौरी।",
+        iast:"śuṃbha niśuṃbha vidāre, mahiṣāsura ghātī ।\ndhūmravilocana nainā, niśadina madamātī ॥\noṃ jaya ambe gaurī ।",
+        en:"You tore apart Śuṃbha and Niśuṃbha, and slew Mahiṣāsura.\nDhūmralocana's eyes are smoke-filled; day and night he roams in mad arrogance.\nOṃ, victory to Ambā Gaurī.",
+        note:"Dhūmralocana ('smoke-eyed') was a general of Śuṃbha sent to capture the Goddess — she destroyed him with a single breath (or, in some versions, a single shout). The verse captures both her victories and the relentlessness of demonic arrogance that keeps seeking her out."
+      },
+      { id:"S6", type:"stanza",
+        dev:"चंड मुंड संहारे, शोणित बीज हरे।\nमधु कैटभ दोऊ मारे, सुर भयहीन करे॥\nॐ जय अम्बे गौरी।",
+        iast:"caṃḍa muṃḍa saṃhāre, śoṇita bīja hare ।\nmadhu kaiṭabha doū māre, sura bhayahīna kare ॥\noṃ jaya ambe gaurī ।",
+        en:"You annihilated Caṇḍa and Muṇḍa, you destroyed Raktabīja.\nYou slew both Madhu and Kaiṭabha, making the gods fearless.\nOṃ, victory to Ambā Gaurī.",
+        note:"Four distinct mythological victories are compressed into a single stanza. Raktabīja ('blood-seed') could clone himself from every drop of blood — Kālī drank every drop before it touched the ground. Madhu and Kaiṭabha were primordial demons born from Viṣṇu's ear-wax at the dawn of creation, slain by the Goddess's power acting through Viṣṇu."
+      },
+      { id:"S7", type:"stanza",
+        dev:"ब्रह्माणी रुद्राणी, तुम कमला रानी।\nआगम-निगम बखानी, तुम शिव पट्टरानी॥\nॐ जय अम्बे गौरी।",
+        iast:"brahmāṇī rudrāṇī, tuma kamalā rānī ।\nāgama-nigama bakhānī, tuma śiva paṭṭarānī ॥\noṃ jaya ambe gaurī ।",
+        en:"You are Brahmāṇī (Brahmā's Śakti), Rudrāṇī (Śiva's Śakti), and the queen Kamalā (Lakṣmī).\nPraised in the Āgamas and Nigamas (tantric and Vedic scriptures), you are Śiva's crowned queen.\nOṃ, victory to Ambā Gaurī.",
+        note:"A compressed Śākta theology: every major goddess — Sarasvatī, Pārvatī, Lakṣmī — is a form of the one Devī. The Āgamas are the tantric scriptures; the Nigamas are the Vedic ones. Both scriptural streams converge in her praise."
+      }
+    ]
+  },
+  {
+    id: "s-glory", label: "Glory (8–11)",
+    verses: [
+      { id:"S8", type:"stanza",
+        dev:"चौंसठ योगिनी गावत, नृत्य करत भैरों।\nबाजत ताल मृदंग, और बाजत डमरू॥\nॐ जय अम्बे गौरी।",
+        iast:"cauṃsaṭha yoginī gāvata, nṛtya karata bhairauṃ ।\nbājata tāla mṛdaṃga, aura bājata ḍamarū ॥\noṃ jaya ambe gaurī ।",
+        en:"The sixty-four Yoginīs sing her praises; Bhairava dances.\nThe mṛdaṃga drum beats the rhythm, and Śiva's ḍamarū resounds.\nOṃ, victory to Ambā Gaurī.",
+        note:"The 64 Yoginīs are the tantric attendants and emanations of the Goddess, worshipped at sacred circular temples (64-pillared yoginī shrines) across India. Bhairava is the fierce form of Śiva who dances in her court. The ḍamarū (Śiva's hourglass drum) and mṛdaṃga together create the cosmic rhythm."
+      },
+      { id:"S9", type:"stanza",
+        dev:"तुम ही जग की माता, तुम ही हो भरता।\nभक्तन की दुःख हरता, सुख सम्पति करता॥\nॐ जय अम्बे गौरी।",
+        iast:"tuma hī jaga kī mātā, tuma hī ho bharatā ।\nbhaktana kī duḥkha haratā, sukha sampati karatā ॥\noṃ jaya ambe gaurī ।",
+        en:"You alone are the mother of the world; you alone are its sustainer.\nYou remove the sorrows of your devotees and bestow happiness and prosperity.\nOṃ, victory to Ambā Gaurī.",
+        note:"This verse is the theological heart of the ārtī: the Goddess is simultaneously Mātā (creator-nurturer) and Bhartā (sustainer) — roles shared with Brahmā and Viṣṇu in standard Hindu theology. The ārtī asserts she is all of these at once."
+      },
+      { id:"S10", type:"stanza",
+        dev:"भुजा चार अति शोभित, वर मुद्रा धारी।\nमनवांछित फल पावत, सेवत नर नारी॥\nॐ जय अम्बे गौरी।",
+        iast:"bhujā cāra ati śobhita, vara mudrā dhārī ।\nmanavāṃchita phala pāvata, sevata nara nārī ॥\noṃ jaya ambe gaurī ।",
+        en:"Your four arms are supremely beautiful, one hand forming the boon-granting mudrā.\nMen and women who serve you receive the fruit of their heart's desire.\nOṃ, victory to Ambā Gaurī.",
+        note:"The vara mudrā (boon-granting gesture) — open palm facing outward — is one of the most important iconographic elements of Durgā. It signals that despite her fierce weapons, her fundamental orientation toward devotees is one of grace and gift-giving."
+      },
+      { id:"S11", type:"stanza",
+        dev:"कंचन थाल विराजत, अगर कपूर बाती।\nश्री मालकेतु में राजत, कोटि रतन ज्योति॥\nॐ जय अम्बे गौरी।",
+        iast:"kañcana thāla virājata, agara kapūra bātī ।\nśrī mālaketu meṃ rājata, koṭi ratana jyoti ॥\noṃ jaya ambe gaurī ।",
+        en:"A golden plate gleams, with wicks of aloe-wood and camphor burning upon it.\nIn the Śrī Māla-ketu (her divine abode), she shines with the light of crores of gems.\nOṃ, victory to Ambā Gaurī.",
+        note:"This verse describes the ārtī ritual itself — the golden thāl (plate), the aloe (agar/agarwood) and camphor (kapūr) wicks whose fragrant smoke rises as an offering. The verse is self-referential: it is sung while the very ritual it describes is being performed."
+      }
+    ]
+  },
+  {
+    id: "s-closing", label: "Closing",
+    verses: [
+      { id:"CL", type:"stanza",
+        dev:"श्री अम्बेजी की आरती जो कोई नर गावे।\nकहत शिवानंद स्वामी, सुख सम्पत्ति पावे॥\nॐ जय अम्बे गौरी।",
+        iast:"śrī ambejī kī āratī jo koī nara gāvai ।\nkahata śivānanda svāmī, sukha sampatti pāvai ॥\noṃ jaya ambe gaurī ।",
+        en:"Whoever sings this ārtī of Śrī Ambājī,\nsays Śivānanda Svāmī, shall attain happiness and prosperity.\nOṃ, victory to Ambā Gaurī.",
+        note:"The closing verse contains the phalaśruti (the fruit of recitation) and the composer's signature. Śivānanda Svāmī is credited as the author, though like many devotional compositions the exact historical attribution is uncertain. The tradition of signing the closing verse is shared with both the Hanuman and Durgā Chalisa."
+      }
+    ]
+  }
+];
+</script>
+<script src="assets/reader.js"></script>
+</body>
+</html>

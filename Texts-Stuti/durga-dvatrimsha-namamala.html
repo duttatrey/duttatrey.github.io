@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Durgā Dvātriṃśannāmamālā · Reader · Stuti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+Devanagari:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/reader.css">
+  <style>
+    :root { --accent: #7a2840; --accent-light: #f5eaed; }
+  </style>
+</head>
+<body>
+<div id="progressBar"></div>
+<div class="topbar">
+  <div class="topbar-row1">
+    <a href="texts.html" class="back-link">← All Texts</a>
+    <div class="text-title-bar">दुर्गाद्वात्रिंशन्नाममाला &nbsp;·&nbsp; Stotra</div>
+    <div class="font-controls">
+      <button class="font-btn" id="btnFontDown">A−</button>
+      <button class="font-btn" id="btnFontUp">A+</button>
+    </div>
+  </div>
+  <div class="switcher-row">
+    <span class="switcher-label">Script</span>
+    <div class="script-switcher" role="group">
+      <button class="script-btn" data-s="dev">देवनागरी</button>
+      <button class="script-btn" data-s="iast">IAST</button>
+      <button class="script-btn" data-s="en">English</button>
+    </div>
+    <span class="progress-text" id="progressText"></span>
+  </div>
+</div>
+<div class="reader-layout">
+  <nav class="sidebar">
+    <p class="nav-label">Sections</p>
+    <ul class="section-list">
+      <li><a href="#s-invocation"  data-sec="s-invocation">Invocation</a></li>
+      <li><a href="#s-names-1-10"  data-sec="s-names-1-10">Names 1–10</a></li>
+      <li><a href="#s-names-11-20" data-sec="s-names-11-20">Names 11–20</a></li>
+      <li><a href="#s-names-21-30" data-sec="s-names-21-30">Names 21–30</a></li>
+      <li><a href="#s-names-31-32" data-sec="s-names-31-32">Names 31–32</a></li>
+      <li><a href="#s-phala"       data-sec="s-phala">Benediction</a></li>
+    </ul>
+  </nav>
+  <div class="verse-column" id="verseCol">
+    <div class="mobile-select">
+      <select id="mobileSelect">
+        <option value="s-invocation">Invocation</option>
+        <option value="s-names-1-10">Names 1–10</option>
+        <option value="s-names-11-20">Names 11–20</option>
+        <option value="s-names-21-30">Names 21–30</option>
+        <option value="s-names-31-32">Names 31–32</option>
+        <option value="s-phala">Benediction</option>
+      </select>
+    </div>
+  </div>
+</div>
+<footer>दुर्गां देवीं शरणमहं प्रपद्ये &nbsp;·&nbsp; Mārkaṇḍeya Purāṇa, ch. 88 &nbsp;·&nbsp; Devī Māhātmyam tradition</footer>
+<script>
+const PAGE_META = { lsKey: 'ddnm_script' };
+var SECTIONS = [
+  {
+    id: "s-invocation", label: "Invocation",
+    verses: [
+      { id:"V0", type:"stanza",
+        dev:"॥ अथ दुर्गाद्वात्रिंशन्नाममाला ॥",
+        iast:"|| atha durgādvātriṃśannāmamālā ||",
+        en:"Here begins the Garland of the Thirty-Two Names of Durgā.",
+        note:"This line is the maṅgalācaraṇa — the auspicious announcement opening the text. The title compounds dvātriṃśat (thirty-two) + nāma (name) + mālā (garland). A mālā in Sanskrit devotional literature is a string of names offered like a garland of flowers — each name a blossom, the whole recitation an act of worship. The stotra is embedded in the Devī Māhātmyam (Durgā Saptaśatī), part of the Mārkaṇḍeya Purāṇa. According to the framing narrative, after her great victories over the asuras, the Devī herself discloses these names to the assembled gods — they are her own self-revelation."
+      }
+    ]
+  },
+  {
+    id: "s-names-1-10", label: "Names 1–10",
+    verses: [
+      { id:"N1", type:"name",
+        dev:"दुर्गा",
+        iast:"Durgā",
+        en:"She Who Is the Fortress Itself",
+        note:"The name Durgā derives from the Sanskrit root durg — 'fort, stronghold; a place difficult of access.' It appears in the Ṛgveda (1.99.1) as an epithet of Agni and by the Purāṇic period had become the Devī's foremost name. The Devī Māhātmyam explains it narratively: she slew the demon Durgama who had stolen the Vedas from Brahmā. Theologically, she is both the fortress that shelters all beings from harm and the impassable terrain that the forces of adharma cannot cross. The name is the seed — the remaining thirty-one names are its unfolding."
+      },
+      { id:"N2", type:"name",
+        dev:"दुर्गार्तिशमनी",
+        iast:"Durgārtiśamanī",
+        en:"She Who Allays the Torment of Every Hardship",
+        note:"From durgā + ārti (pain, anguish, distress) + śamanī (she who calms; from the root śam). Ārti is the interior anguish that comes from being trapped in suffering — the same word used in the devotional cry to the Devī. Śamanī from śam (to be calm, extinguish) is the title of one who brings peace. The name promises that the Devī does not merely remove external obstacles but soothes the inner anguish they cause. The same root śam gives śānti — she is the peace on the far side of the difficulty."
+      },
+      { id:"N3", type:"name",
+        dev:"दुर्गापद्विनिवारिणी",
+        iast:"Durgāpadvinivāriṇī",
+        en:"She Who Turns Away Every Calamity Born of Difficulty",
+        note:"From durgā + āpad (calamity; literally 'that which falls upon one') + vinivāriṇī (she who thoroughly wards off). Āpad denotes specifically the misfortune that arrives unbidden, the crisis that overwhelms. The prefix vi- in vinivāriṇī adds thoroughness — she does not deflect or delay the calamity but removes it entirely and at its root. This name is invoked especially in periods of sudden crisis or unforeseen disaster."
+      },
+      { id:"N4", type:"name",
+        dev:"दुर्गमच्छेदिनी",
+        iast:"Durgamacchedinī",
+        en:"She Who Cleaves Through the Impenetrable",
+        note:"From durgama (impenetrable, very difficult to cross) + acchedinī (she who cuts through; from the root chid, to cut, sever). Durgama intensifies durga — it is not merely difficult but truly impassable. Cchedinī from chid shares its ancestry with the Sanskrit khadga (sword). The name images the Devī as a blade cutting through whatever barrier seems absolute — ignorance, dense karma, despair — making a way where none existed."
+      },
+      { id:"N5", type:"name",
+        dev:"दुर्गसाधिनी",
+        iast:"Durgasādhinī",
+        en:"She Who Masters and Accomplishes the Unconquerable",
+        note:"From durga + sādhinī (she who accomplishes, brings to completion; from the root sādh). The root sādh gives sādhana (spiritual practice), sādhu (holy one who has walked the path to its end), and siddhi (perfected attainment). Durgasādhinī carries a rich double meaning: she subdues hostile circumstances, and in the spiritual dimension she brings the practitioner through the most durgama passages of practice to siddhi. The very terrain that blocks the path becomes the vehicle of accomplishment."
+      },
+      { id:"N6", type:"name",
+        dev:"दुर्गनाशिनी",
+        iast:"Durganāśinī",
+        en:"She Who Annihilates All Difficulty",
+        note:"From durga + nāśinī (she who destroys, causes to vanish; from the root naś). Nāśa is annihilation — not defeat or suppression but total dissolution, as darkness vanishes before a lamp. This is also a direct narrative epithet: she destroyed the demon Durgama who had stolen the Vedas, leaving the gods without sacred knowledge. The Devī recovered the scriptures and in doing so earned the name that became her own. Durganāśinī is almost reflexive — she destroyed the entity that became her name."
+      },
+      { id:"N7", type:"name",
+        dev:"दुर्गतोद्धारिणी",
+        iast:"Durgatoddhāriṇī",
+        en:"She Who Lifts the Fallen Out of Their Misfortune",
+        note:"From durgata (one in a bad state; past participle of dur + gam, 'gone badly') + uddhāriṇī (she who lifts up, rescues; from ud + dhṛ). Durgata implies not just bad luck but the condition of having sunk low — morally, materially, spiritually. Uddhāriṇī shares its imagery with crossing a river (uttaraṇa): she ferries the utterly stranded to the far bank. In the Devī Māhātmyam, the Devī explicitly promises this rescue to all who invoke her in need."
+      },
+      { id:"N8", type:"name",
+        dev:"दुर्गनिहन्त्री",
+        iast:"Durganihantṛī",
+        en:"She Who Slays What Cannot Be Slain",
+        note:"From durga + nihantṛī (she who slays; from the root han, to strike). Han is one of Sanskrit's most ancient verbal roots — it appears in Vedic hymns of Indra slaying Vṛtra, in the very name of Hanumān, and here the Devī assumes that cosmic function. The name asserts that what seems impossible to defeat — the demons of deep-rooted ego, of accumulated karma, of cosmic disorder — falls before her. She does not negotiate with durga; she slays it."
+      },
+      { id:"N9", type:"name",
+        dev:"दुर्गमापहा",
+        iast:"Durgamāpahā",
+        en:"She Who Removes the Darkness of the Impassable",
+        note:"From durgama + apahā (she who removes, takes away; from apa + hā, to lead away). The root apa-hā means 'to lead away, carry off' — not destruction but removal, as one leads a boulder aside from the path. A secondary reading is durgam-āpa-hā: 'she who removes what is difficult to obtain,' giving the name an additional sense as the bestower of otherwise unattainable boons. The name is thus both protective (removing obstacles) and graceful (granting what no effort alone could secure)."
+      },
+      { id:"N10", type:"name",
+        dev:"दुर्गमज्ञानदा",
+        iast:"Durgamajñānadā",
+        en:"She Who Bestows the Most Inaccessible Knowledge",
+        note:"From durgama + jñāna (liberating wisdom) + dā (giver). Jñāna in the Śākta tradition is not mere information but the direct luminous perception of the Devī's nature as the ground of all being. The compound durgama-jñāna is profound: the highest wisdom is itself 'difficult of access' — it cannot be attained by ordinary study or effort alone. That the Devī dā (gives) it is the teaching of grace (anugraha) at the heart of Śākta devotion: what human striving cannot reach, she gives freely."
+      }
+    ]
+  },
+  {
+    id: "s-names-11-20", label: "Names 11–20",
+    verses: [
+      { id:"N11", type:"name",
+        dev:"दुर्गदैत्यलोकदवानला",
+        iast:"Durgadaityalokadavānalā",
+        en:"She Who Is a Wildfire Consuming the Realm of Terrible Demons",
+        note:"The most vivid compound in the stotra: durga + daitya (demon, child of Diti) + loka (world, realm) + davānala (wildfire; dava = burning forest + anala = fire). The daityas are the great asuras of the Purāṇas — Hiraṇyakaśipu, Mahiṣāsura, Śumbha, Niśumbha — whose realm is the sphere of ego, adharma, and cosmic disorder. A davānala is a wildfire, uncontrolled and total. This single name compresses the entire narrative arc of the Devī Māhātmyam — three great demon-slayings — into one blazing image."
+      },
+      { id:"N12", type:"name",
+        dev:"दुर्गमा",
+        iast:"Durgamā",
+        en:"She Who Is the Impassable Herself",
+        note:"Durgamā is the feminine form of durgama — the Devī does not merely overcome the impassable, she is it. This encodes a central teaching of the Devī Māhātmyam: the Devī is mahāmāyā, the cosmic power that both creates obstruction by veiling Brahman and removes it by revealing Brahman. She is simultaneously the veil and the unveiled reality, the lock and the key. To know her as Durgamā is to understand that the obstacle and the liberator are one and the same power in different modes."
+      },
+      { id:"N13", type:"name",
+        dev:"दुर्गमालोका",
+        iast:"Durgamālokā",
+        en:"She Whose Realm Is Beyond All Ordinary Reach",
+        note:"From durgamā + loka (world, realm; from the root lok, to see, to shine — a loka is literally a sphere of light-perception). Durgamālokā is 'she whose loka is the impassable luminosity' — a sphere of consciousness beyond ordinary perception. In Śākta cosmology the Devī's abode is Manidhīpa — the Island of Gems — described in the Devī Bhāgavata Purāṇa as a realm of pure light beyond the three worlds, accessible only through her grace."
+      },
+      { id:"N14", type:"name",
+        dev:"दुर्गमात्मस्वरूपिणी",
+        iast:"Durgamātmasvarūpiṇī",
+        en:"She Whose Essential Nature Is the Transcendent Self",
+        note:"From durgama + ātman (the Self, the ultimate ground of being) + svarūpiṇī (she whose very own form — svarūpa — is this). Svarūpa means 'own form, essential nature' — not an attribute or role but what something fundamentally is. This name identifies the Devī with the ātman of Advaita Vedānta. In Śākta Advaita, consciousness and power are not separate: the Devī as svarūpiṇī of the ātman declares that pure awareness itself is the Goddess."
+      },
+      { id:"N15", type:"name",
+        dev:"दुर्गमार्गप्रदा",
+        iast:"Durgamārgapradā",
+        en:"She Who Opens a Path Through Impossible Terrain",
+        note:"From durgama + mārga (path; also the initiatory spiritual path) + pradā (giver). Mārga is both a literal road and the path of spiritual practice — the Śaiva-Śākta traditions use mārga for the initiatory way. Durgamārgapradā grants the path itself where no path exists. In practical devotional terms this name is invoked when a seeker is spiritually blocked, when the way forward is nowhere visible. She does not show a path that already exists — she creates one."
+      },
+      { id:"N16", type:"name",
+        dev:"दुर्गमविद्या",
+        iast:"Durgamavidyā",
+        en:"She Who Is the Transcendent Knowledge Beyond All Reach",
+        note:"From durgama + vidyā (sacred knowledge; the Devī as liberating gnosis). Vidyā in the Śākta tradition is not scholarship but the direct luminous knowing of the Devī's nature. She herself is called Mahāvidyā — the Great Knowledge — and the ten Mahāvidyās (Kālī, Tārā, Tripurā Sundarī and the rest) are emanations of this knowing power. Durgamavidyā specifically identifies the Devī with the vidyā that arrives only as pure grace. To name her this is to acknowledge that the knower and the known are ultimately identical."
+      },
+      { id:"N17", type:"name",
+        dev:"दुर्गमाश्रिता",
+        iast:"Durgamāśritā",
+        en:"She Who Is the Supreme Refuge for All Who Face the Impassable",
+        note:"From durgama + āśritā (she who is taken refuge in; from ā-śri, to resort to, take shelter with). The paradox is intentional: what is most difficult to reach (durgama) is also the most complete shelter (āśritā). This is the central devotional truth of the Devī Māhātmyam: the Devī who is transcendent and beyond ordinary reach is simultaneously the most immediately available protection for the person in distress."
+      },
+      { id:"N18", type:"name",
+        dev:"दुर्गमज्ञानसंस्थाना",
+        iast:"Durgamajñānasaṃsthānā",
+        en:"She Who Abides as the Very Ground of Transcendent Wisdom",
+        note:"From durgama + jñāna + saṃsthānā (she who is the ground of; from sam + sthā, to stand firmly as the substratum). Saṃsthāna is foundation — not a resident of jñāna but its very ground. This name does not say the Devī has wisdom or gives wisdom; she is the substratum in which transcendent wisdom is established. This aligns with the Kena Upaniṣad's teaching that the knowing power itself is the Devī — she through whom Indra knew that he did not know."
+      },
+      { id:"N19", type:"name",
+        dev:"दुर्गमध्यानभासिनी",
+        iast:"Durgamadhyānabhāsinī",
+        en:"She Who Shines Forth in the Deepest Meditation",
+        note:"From durgama + dhyāna (meditative absorption) + bhāsinī (she who shines; from the root bhā). The deepest dhyāna — the samādhi most practitioners find durgama — is precisely where she bhāsate, shines. Bhāsinī shares its root with bhāsa (luster), bhānu (the sun), and bhāva (luminous feeling). The name teaches that the Devī's presence is the natural condition of the innermost silence, not a reward added to it. She does not appear in meditation; she is its light."
+      },
+      { id:"N20", type:"name",
+        dev:"दुर्गमोहा",
+        iast:"Durgamohā",
+        en:"She Who Is the Cosmic Bewilderment That Veils Even the Mighty",
+        note:"One of the most theologically charged names. Moha is delusion — the cosmic bewilderment that makes multiplicity appear real and the ground of being appear hidden. The Devī Māhātmyam opens with the teaching that the Devī is mahāmāyā — she casts even Viṣṇu into yoganidrā (cosmic sleep). Durgamohā is this power: the veil so impenetrable that even the greatest minds cannot see through it unaided. In Śākta theology this is not pejorative — her māyā is also the power by which, when she withdraws the veil, liberation dawns instantly. She both enchants and enlightens."
+      }
+    ]
+  },
+  {
+    id: "s-names-21-30", label: "Names 21–30",
+    verses: [
+      { id:"N21", type:"name",
+        dev:"दुर्गमगा",
+        iast:"Durgamagā",
+        en:"She Who Moves Freely Through the Impenetrable",
+        note:"From durgama + gā (she who goes, moves, pervades; from the root gam in its feminine participial form). The Devī is not stopped by durgama — she moves through it as consciousness pervades even the densest matter. In Tantric practice this is the power invoked to move through blockages in the subtle body (nāḍīs), particularly in deep practice where energy appears stuck at a cakra or in the kāraṇa śarīra (causal body)."
+      },
+      { id:"N22", type:"name",
+        dev:"दुर्गमार्थस्वरूपिणी",
+        iast:"Durgamārthasvarūpiṇī",
+        en:"She Whose Very Nature Is the Highest Purpose and Meaning",
+        note:"From durgama + artha (meaning, purpose, aim — one of Sanskrit's richest words, covering meaning, wealth, aim, and object) + svarūpiṇī. Durgamārthasvarūpiṇī names the Devī as the summum bonum — the supreme purpose that makes all other purposes secondary. She is not a means to an end; she is the artha — the deepest meaning — that no amount of searching through other artha can supply."
+      },
+      { id:"N23", type:"name",
+        dev:"दुर्गमासुरसंहन्त्री",
+        iast:"Durgamāsurasaṃhantṛī",
+        en:"She Who Utterly Annihilates the Most Terrible of Demons",
+        note:"From durgama + asura (demon) + saṃhantṛī (she who utterly destroys; sam + han, the prefix adding completeness). The name recalls the Devī Māhātmyam's great battles: the slaying of Mahiṣāsura (the buffalo-demon who had conquered the three worlds), of Śumbha and Niśumbha, and of Raktabīja whose every blood-drop spawned a new demon. These were enemies so powerful that all the male gods together had failed — only the Devī, the unified śakti of all divinity, could prevail."
+      },
+      { id:"N24", type:"name",
+        dev:"दुर्गमायुधधारिणी",
+        iast:"Durgamāyudhadhāriṇī",
+        en:"She Who Bears Weapons No Enemy Can Withstand",
+        note:"From durgama + āyudha (weapon) + dhāriṇī (she who bears). The classical Durgā is depicted with eight or eighteen arms, each bearing a weapon gifted by a different god at the moment of her creation: Śiva's trident (triśūla), Viṣṇu's discus (cakra), Indra's thunderbolt (vajra), Yama's staff (daṇḍa), Varuṇa's noose (pāśa), and others. Each god gave his own weapon because no single deity could defeat Mahiṣāsura — only the Devī, receiving all their powers, carried weapons that no adversary could withstand."
+      },
+      { id:"N25", type:"name",
+        dev:"दुर्गमाङ्गी",
+        iast:"Durgamāṅgī",
+        en:"She Whose Very Body Is Beyond All Ordinary Comprehension",
+        note:"From durgama + aṅgī (she who possesses aṅga, limbs, body). Durgamāṅgī names the Devī's divine form itself as transcendent and beyond ordinary perception. In iconographic terms, her many arms (eight, ten, or eighteen) are her aṅgas, each extending her divine reach into a different dimension of reality. In Tantric understanding the Devī's body (divyadeha) pervades all of space — her limbs are the directions themselves."
+      },
+      { id:"N26", type:"name",
+        dev:"दुर्गमता",
+        iast:"Durgamatā",
+        en:"She Who Embodies the Quality of Transcendence Itself",
+        note:"From durgama + tā (a Sanskrit abstract nominal suffix creating a quality; as in mahimā 'greatness,' śāntatā 'peacefulness'). Durgamatā is 'she who embodies the quality of being durgama' — the Devī as the living principle of transcendence. Some traditional commentators read this as durgama-tā from mātr (mother): 'the mother of the impassable.' Either way, the name attributes to the Devī an absolute quality rather than a function — she does not merely do transcendence; she is it."
+      },
+      { id:"N27", type:"name",
+        dev:"दुर्गम्या",
+        iast:"Durgamyā",
+        en:"She Who Is Utterly Beyond All Approach",
+        note:"From durgamya — from durgam + the Sanskrit gerundive suffix -ya (expressing that which cannot be done). Durgamya is 'she who cannot be approached, cannot be gone to' — an absolute statement of transcendence. The devotional paradox is intentional: this name appears in a stotra whose very purpose is to approach her. The names, given by the Devī herself, are the path through her own transcendence. To chant Durgamyā is to approach the unapproachable through her own grace."
+      },
+      { id:"N28", type:"name",
+        dev:"दुर्गमेश्वरी",
+        iast:"Durgameśvarī",
+        en:"The Sovereign Goddess of All That Is Impassable",
+        note:"From durgama + īśvarī (sovereign, queen, the female lord; feminine of Īśvara). Īśvarī is the Devī's most regal title — it asserts absolute sovereignty and appears in texts from the Śākta Upaniṣads through the Tantras. Durgameśvarī is her sovereignty specifically over all that is durgama — every form of obstacle, darkness, and impenetrable terrain, inner and outer. This name closes the fifth verse and crowns the first great movement of the stotra: from the seed-name Durgā to the full declaration of her lordship."
+      },
+      { id:"N29", type:"name",
+        dev:"दुर्गभीमा",
+        iast:"Durgabhīmā",
+        en:"She Who Is Terrifying in Her Aspect",
+        note:"The first of the final four names, which shift from durgama-compounds to durgā + a quality. Bhīmā means 'terrible, formidable, inspiring fear' — an epithet of Rudra and Bhairava in their most fierce manifestations, here fully claimed by the Devī. Durgabhīmā is the ugra (fierce) face of the Goddess that strikes terror into adharma and the ego's resistance to transformation. In the Devī Māhātmyam this fierce face is the same face that smiles with infinite compassion on devotees — terror and love are indivisible."
+      },
+      { id:"N30", type:"name",
+        dev:"दुर्गभामा",
+        iast:"Durgabhāmā",
+        en:"She Who Is the Radiant, Passionate Beauty of the Goddess",
+        note:"From durgā + bhāmā (a spirited, beautiful, passionate woman; from the root bhā, to shine). Bhāmā denotes a woman of great beauty and ardent spirit — it is used of Satyabhāmā (Kṛṣṇa's most beautiful consort) and of celestial women of blazing radiance. Placed directly after Durgabhīmā (the terrifying), Durgabhāmā reveals the complete mystery of the Devī: simultaneously the most fearsome and the most beautiful. The Terrible and the Beautiful are not opposites in the Devī but two faces of the same infinite śakti."
+      }
+    ]
+  },
+  {
+    id: "s-names-31-32", label: "Names 31–32",
+    verses: [
+      { id:"N31", type:"name",
+        dev:"दुर्गभा",
+        iast:"Durgabhā",
+        en:"She Who Blazes with the Radiance of the Divine",
+        note:"From durgā + bhā (radiance, lustre, light; from the root bhā, to shine). Bhā is Sanskrit's primal word for light — the root of bhānu (the sun), bhāva (luminous feeling-awareness), and bhāti (shines). Durgabhā names the Devī as pure luminosity, the cit-śakti (the power of consciousness) that shines in all beings as their awareness. In the Devī Gītā (Devī Bhāgavata Purāṇa 7.32), the Devī declares: 'I alone am the self-luminous consciousness; I am the light behind all other lights.' Durgabhā encodes this declaration in two syllables."
+      },
+      { id:"N32", type:"name",
+        dev:"दुर्गदारिणी",
+        iast:"Durgadāriṇī",
+        en:"She Who Rends Asunder Every Darkness and Bondage",
+        note:"The thirty-second and final name: from durgā + dāriṇī (she who tears open, rends asunder; from the root dṛ/dār, to split, burst open). Dāriṇī is a forceful word — it appears in descriptions of the Devī bursting open demons as a lion tears prey. The garland of thirty-two names ends not with a gentle title but with a reminder of the Devī's absolute power to break open whatever holds the devotee captive. The thirty-second bead closes the mālā, returning to the fierce liberating energy of the first name, Durgā. The circle of the garland is complete."
+      }
+    ]
+  },
+  {
+    id: "s-phala", label: "Benediction",
+    verses: [
+      { id:"V33", type:"stanza",
+        dev:"नामावलिमिमां यस्तु दुर्गाया मम मानवः।\nपठेत् सर्वभयान्मुक्तो भविष्यति न संशयः।\n॥ इति दुर्गाद्वात्रिंशन्नामावलिः समाप्ता ॥",
+        iast:"nāmāvalimimāṃ yastu durgāyā mama mānavāḥ |\npaṭhet sarvabhayānmukto bhaviṣyati na saṃśayaḥ ||\n|| iti durgādvātriṃśannāmāvaliḥ samāptā ||",
+        en:"Whoever among mortals recites this garland of my names — of Durgā — will be freed from all fear. Of this there is no doubt.\n\nThus the Garland of the Thirty-Two Names of Durgā is concluded.",
+        note:"The phalaśruti — 'the fruit of recitation' — is the standard closing device of Sanskrit stotras. Two details here are theologically significant. First, the Devī speaks in the first person: nāmāvalimimāṃ durgāyā mama — 'this garland of my names.' The names are not a human composition about her; they are her own self-disclosure, given in the Devī Māhātmyam when the gods asked how to overcome their enemies. Second, the promise is unqualified and total: sarvabhayānmuktaḥ — 'freed from all fears.' In the Śākta understanding all fear traces back to one root: the ego's sense of being separate and unprotected. The Devī removes this root fear by revealing that the devotee was never separate from her. Na saṃśayaḥ — 'no doubt' — is the seal of the Devī's own word on that promise."
+      }
+    ]
+  }
+];
+</script>
+<script src="assets/reader.js"></script>
+</body>
+</html>
