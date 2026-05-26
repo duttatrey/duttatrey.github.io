@@ -7,9 +7,7 @@ layout: home
 <img align= "right" src="assets/images/bio-image.png" width="400">
 Hi! I am Duttatrey.
 
-I am now a consultant with EY New Zealand in the Financial Services team. My team focuses on actuarial consulting for insurance and banking firms across New Zealand.
-
-The texts are here: [Sacred Texts](/texts)
+I am now a analyst with experience across Insurance Pricing and Financial Services.
 
 I have a PhD in mathematics from [University of Canterbury]("http://www.canterbury.ac.nz"). It was funded by a PhD scholarship from the Marsden Grant.
 
